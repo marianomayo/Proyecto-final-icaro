@@ -6,10 +6,10 @@ const OrderRouter = Router();
 
 const { validarErrores } = require("../Middlewares");
 const { checkSession } = require('../Auth/checkSession');
+const { checkCantidadesProducto } = require('../Middlewares/regNegMiddleware');
 
 
-
-OrderRouter.post("/addProductToCart", [checkSession, validarErrores], OrdenCompraController.addToCart);
+OrderRouter.post("/addProductToCart", [checkSession, checkCantidadesProducto, validarErrores], OrdenCompraController.addToCart);
 
 OrderRouter.post("/deleteProduct", [checkSession, validarErrores], OrdenCompraController.deleteProductCart);
 

@@ -26,7 +26,13 @@ const editProduct = (id, vObj) => {
     );
 }
 
+const editCantidad = (id, cantidad) => {
+    return db.query(
+      `UPDATE producto SET ncantidad = ncantidad - '${cantidad}' WHERE id_producto = ${id}`
+    );
+}
 
 
 
-module.exports = { getAll, getProductById, addProduct, editProduct }
+
+module.exports = { getAll, getProductById, addProduct, editProduct, editCantidad }
