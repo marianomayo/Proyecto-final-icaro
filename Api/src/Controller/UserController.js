@@ -1,5 +1,6 @@
 const AuthBcrypt = require('../Auth/AuthBcrypt');
 const UserModel = require('../Model/UserModel');
+const AdministradorModel = require('../Model/AdministradorModel');
 
 const addUser = async (req, res) => {
     try {
@@ -8,6 +9,12 @@ const addUser = async (req, res) => {
         const existingUser = await UserModel.getUser(user.email);
 
         if (existingUser.length > 0) {          
+            return res.status(400).json({ msg: 'El usuario ya existe.', success: false });
+        }
+
+        const existingUserAdmin = await AdministradorModel.getAdmin(user.email);
+
+        if (existingUserAdmin.length > 0) {          
             return res.status(400).json({ msg: 'El usuario ya existe.', success: false });
         }
        
@@ -45,9 +52,7 @@ const logIn = async (req, res) => {
        
         const existingUser = await UserModel.getUser(email);
 
-        if (existingUser.length === 0) {
-            return res.status(401).json({ msg: 'El usuario no existe.', success: false });
-        }else{       
+        if (existingUser.length > 0) {           
 
             if (!AuthBcrypt.compareHash(password, existingUser[0].vpassword)) {
                 return res.status(401).json({ msg: 'La contraseña es incorrecta.', success: false });
@@ -56,8 +61,29 @@ const logIn = async (req, res) => {
             req.session.userId = existingUser[0].id_usuario;
             req.session.nombre = existingUser[0].vnombre;
             req.session.apellido = existingUser[0].vapellido;
-            console.log(req.session)
+            req.session.administrador = false;
             res.status(200).json({ msg: 'Inicio de sesión exitoso.', success: true });
+        }else{
+            //verificamos si no es un administrador
+            const existingAdmin = await AdministradorModel.getAdmin(email);
+
+            if(existingAdmin.length > 0){
+                
+                if (!AuthBcrypt.compareHash(password, existingAdmin[0].vpassword)) {
+                    return res.status(401).json({ msg: 'La contraseña es incorrecta.', success: false });
+                }
+
+                req.session.userId = existingAdmin[0].id_administrador;
+                req.session.nombre = existingAdmin[0].vnombre;
+                req.session.apellido = existingAdmin[0].vapellido;
+                req.session.administrador = true;
+       
+
+                res.status(200).json({ msg: 'Inicio de sesión exitoso para administrador.', success: true });
+            } else {               
+                return res.status(401).json({ msg: 'El usuario no existe.', success: false });
+            }
+
         }
        
     } catch (error) {

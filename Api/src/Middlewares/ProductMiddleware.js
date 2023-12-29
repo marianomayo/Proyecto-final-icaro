@@ -1,5 +1,6 @@
 const { body, param } = require("express-validator");
 const { getBrandById } = require('../Model/BrandModel');
+const { getCategoriaById } = require('../Model/CategoriasModel');
 
 const validateName = body("nombre") 
   .notEmpty()
@@ -33,18 +34,47 @@ const validateName = body("nombre")
   .withMessage("El precio debe ser mayor que 0");
 
 
-  /**
-   * Todo
-   * Realizar chequeo de existencia de marca a nivel de middleware
-   */
-  const validateBrand = body("nmarca") 
-  .notEmpty()
-  .withMessage("La marca es obligatoria");
+const validateBrand = body("nmarca") 
+.notEmpty()
+.withMessage("La marca es obligatoria");
 
-  const validateCategoria = body("ncategoria") 
-  .notEmpty()
-  .withMessage("La Categoria es obligatoria");
+const validateCategoria = body("idcategoria") 
+.notEmpty()
+.withMessage("La Categoria es obligatoria");
+
+const existCategoria = async (req, res, next) => {
+
+    const {idcategoria} = req.body;
+    if(idcategoria !== undefined){
+      const categoria = await getCategoriaById(idcategoria);
+      if(categoria.length > 0){
+        next();
+      }else{
+        res.status(400).json({ message: 'No existe la categoria', success: false });
+      }
+    }else{
+      res.status(400).json({ message: 'Ingrese categoria', success: false });
+    }
+   
+  
+};
+
+const existMarca = async (req, res, next) => {
+
+  const {nmarca} = req.body;
+  if(nmarca !== undefined){
+    const marca = await getBrandById(nmarca);
+    if(marca.length > 0){
+      next();
+    }else{
+      res.status(400).json({ message: 'No existe la Marca', success: false });
+    }
+  }else{
+    res.status(400).json({ message: 'Ingrese Marca', success: false });
+  }
+  
+};
 
 
 
-  module.exports = {validateName, validateDescription, validatePrice, validateBrand, validateCategoria};
+module.exports = {validateName, validateDescription, validatePrice, validateBrand, validateCategoria, existCategoria, existMarca};

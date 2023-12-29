@@ -20,33 +20,21 @@ const getAll = async (req, res) => {
    
 }
 
-const addProduct = async (req, res) => {
-    const nMarca = req.body.nmarca;
-    const nCategoria =  req.body.idcategoria;
+const addProduct = async (req, res) => {   
 
-    const brand = await BrandModel.getBrandById(nMarca);
-
-    const categoria = await CategoriaModel.getCategoriaById(nCategoria);
-
-    if(categoria.length > 0 && brand.length){
-        
+    const current_admin =  req.session.userId;
+    const response = ProductModel.addProduct(req.body, current_admin);
+    if(response){
+        res.status(200).send({ 
+            "message": `El producto fue agregado correctamente`,
+            "success": true
+        });
+    }else{
+        res.status(404).send({
+            'msg' : "hubo un error al crear el producto"
+        })
     }
 
-    BrandModel.getBrandById(nMarca).then((pResultadoMarca) => {
-        if (pResultadoMarca.length === 0) {            
-            res.status(404).send({
-                "message": `La marca seleccionada no existe en la Base de Datos` 
-            })
-        } else {
-            ProductModel.addProduct(req.body).then((pResultadoProducto) => {
-                res.status(200).send({ 
-                    "message": `El producto fue agregado correctamente` 
-                });
-            }).catch((e) => res.status(404).send({
-                    'msg' : "hubo un error al crear el producto"
-                }))
-        }
-    })
     
     
 }
