@@ -1,7 +1,7 @@
 const OrdenCompraModel = require('../Model/OrdenCompraModel');
 const OrdenCompraArticuloModel = require('../Model/OrdenCompraArticuloController');
 const ViewOrdenCompraXArticuloModel = require('../Model/ViewOrdenCompraPorArticulo');
-const productModel = require('../Model/ProductModel');
+
 
 
 const addToCart = async (req, res) => {
@@ -35,7 +35,7 @@ const addToCart = async (req, res) => {
         }
         
         if(result) {
-            await productModel.editCantidad(vObjProducto.ncantidad)
+            
             let message = edicion ? 'Se ha editado las cantidades en el carrito.' : 'Producto Agregado al carrito.';
             res.status(200).json({ msg: message, success: true });
         }else{
