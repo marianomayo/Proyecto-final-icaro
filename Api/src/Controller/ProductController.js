@@ -21,35 +21,52 @@ const getAll = async (req, res) => {
 }
 
 const addProduct = async (req, res) => {   
-
-    const current_admin =  req.session.userId;
-    const response = ProductModel.addProduct(req.body, current_admin);
-    if(response){
-        res.status(200).send({ 
-            "message": `El producto fue agregado correctamente`,
-            "success": true
-        });
-    }else{
-        res.status(404).send({
-            'msg' : "hubo un error al crear el producto"
-        })
+    try{
+        const current_admin =  req.session.userId;
+        const response = ProductModel.addProduct(req.body, current_admin);
+        if(response){
+            res.status(200).send({ 
+                "message": `El producto fue agregado correctamente`,
+                "success": true
+            });
+        }else{
+            res.status(404).send({
+                'msg' : "hubo un error al crear el producto"
+            })
+        }
+    }catch(error){
+        console.log(error)
+        res.status(404).send({'msg' : "Error al crear el producto", 'success': false  })
     }
+    
 
     
     
 }
 
-const editProduct = (req, res) => {
+const editProduct = async (req, res) => {
     
-    const idParams = Number(req.params.id);
-    ProductModel.editProduct(idParams, req.body).then((pResultadoProducto) => {
-        res.status(200).send({ 
-            "message": `El producto ${req.body.nombre} fue actualizado correctamente` 
-        });
-    }).catch((e) => res.status(404).send({
-        'msg' : "hubo un error al actualizar el producto producto",
-        'error': e
-    }))
+    try {
+        const idParams = Number(req.params.id);
+
+        const response = await ProductModel.editProduct(idParams, req.body);
+        if(response){
+            res.status(200).send({ 
+                "message": `El producto ${req.body.nombre} fue actualizado correctamente`,
+                'success': true
+            });
+        }else{
+            res.status(404).send({
+                'msg' : "hubo un error al actualizar el producto producto",
+                'error': e,
+                'success': false
+            })
+            
+        }
+    }catch(error){
+        console.log(error)
+        res.status(404).send({'msg' : "Error al Editar producto", 'success': false  })
+    }
     
 }
 

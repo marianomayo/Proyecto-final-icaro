@@ -15,14 +15,14 @@ const getProductById = (id) => {
 
 const addProduct = (vObj, current_admin) => {   
     return db.query(
-        `INSERT INTO producto (vnombre, tdescripcion, fprecio, nusuariocreador, id_marca, id_categoria) 
-            VALUES ('${vObj.nombre}', '${vObj.descripcion}', '${vObj.fprecio}', '${current_admin}', '${vObj.nmarca}', '${vObj.idcategoria}')`
+        `INSERT INTO producto (vnombre, tdescripcion, fprecio, nusuariocreador, id_marca, id_categoria, ncantidad) 
+            VALUES ('${vObj.nombre}', '${vObj.descripcion}', '${vObj.fprecio}', '${current_admin}', '${vObj.nmarca}', '${vObj.idcategoria}', '${vObj.ncantidad}')`
       );
 }
 
 const editProduct = (id, vObj) => {
     return db.query(
-      `UPDATE producto SET vnombre = '${vObj.nombre}', tdescripcion = '${vObj.descripcion}', fprecio = ${vObj.fprecio}, id_marca = ${vObj.nmarca}, id_categoria = ${vObj.idcategoria} WHERE id_producto = ${id}`
+      `UPDATE producto SET vnombre = '${vObj.nombre}', tdescripcion = '${vObj.descripcion}', fprecio = ${vObj.fprecio}, id_marca = ${vObj.nmarca}, id_categoria = ${vObj.idcategoria}, ncantidad = ${vObj.ncantidad} WHERE id_producto = ${id}`
     );
 }
 

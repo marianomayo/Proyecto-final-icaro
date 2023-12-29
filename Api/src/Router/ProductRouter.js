@@ -14,7 +14,7 @@ ProductRouter.get("/getAll", ProductController.getAll);
 ProductRouter.post("/addProduct", [checkSessionAdmin, validateName, validateDescription, validatePrice, validateBrand, validateCategoria, existCategoria, existMarca, validarErrores], ProductController.addProduct);
 
 /**Tener en cuenta que si el id no se encuentra que avise al usuario, chequear cantidades*/
-ProductRouter.put("/editProduct/:id", [checkSessionAdmin, idRequired, validateName, validateDescription, validarErrores], ProductController.editProduct);
+ProductRouter.put("/editProduct/:id", [checkSessionAdmin, idRequired, validateName, validateDescription,  validatePrice, validateBrand, validateCategoria, existCategoria, existMarca, validarErrores], ProductController.editProduct);
 
 ProductRouter.get("/getProductById/:id", [idRequired, validarErrores], ProductController.getProductById);
 
