@@ -1,0 +1,305 @@
+
+  .logo {
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+  padding: 10px;
+  background-color: #F0F3F5;
+  color: #000000;
+  }
+  
+  .logo h1{
+  font-family: 'Montserrat', sans-serif !important
+  }
+  
+  .btn_menu {
+  color: 000000;
+  padding: 15px;
+  }
+  
+  .btn_menu i{
+  color: #000000;
+  font-size: x-large;
+  text-decoration: none;
+  }
+  
+  .menu {
+  width: 100%;
+  display: flex;
+  justify-items: flex-end;
+  background-color: #F0F3F5; 
+  }
+  
+  ul.navigation {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  display: none;
+  flex-direction: column;
+  }
+  
+  ul.navigation.show {
+  display: flex;
+  }
+  
+  ul.navigation li {
+  list-style: none;
+  margin: 0px 0px;
+  padding: 15px 20px;
+  text-align: right; 
+  }
+  
+  ul.navigation li a {
+  text-decoration: none;
+  color: #000000;
+  cursor: pointer;
+  }
+  
+  ul.navigation li:hover {
+  border-radius: 10px;
+  box-shadow: 0 0 5px #cdd0d2; 
+  }
+  
+  .banner{
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  }
+  .banner img{
+  width: 100%;
+  max-height: 300px;
+  }
+  
+  footer{
+  margin-top: 1rem;
+  background-color: #F0F3F5; 
+  }
+  .footer-menu{
+  padding-top: 10px;
+  }
+  .footer-menu ul{
+  display: flex;
+  justify-content: space-evenly;
+  }
+  .footer-menu ul li{
+  list-style: none;   
+  }
+  .footer-menu ul li a{
+  text-decoration: none;  
+  color: #000000;
+  }
+  
+  .map iframe{
+  width: 100%;
+  }
+  .map{
+  margin-top: 0.5rem;
+  }
+  .copyright{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  } 
+  
+  .copyright img{
+  max-height: 30px;
+  max-width: 30px;
+  }
+  .div-copyright-desktop{
+  display: none;
+  }
+  .img-logo h4{
+  display: none;
+  }
+  
+  
+  .whatsapp-button {
+  position: fixed;
+  bottom: 20px; 
+  right: 20px; 
+  z-index: 999; 
+  }
+  
+  .whatsapp-button img {
+  width: 50px; 
+  }
+  .copyright .img-logo div{
+  display: none;
+  }
+  
+  .copyright .img-logo div input{
+  border: 1px solid #ccc;
+  padding: 4px;
+  
+  }
+  
+  @media screen and (min-width: 450px){
+  
+  
+  .btn_menu {
+      display: none;
+  }
+  .img-logo h4{
+    display: block;
+    font-family: 'Montserrat', sans-serif !important
+  }
+  .logo{
+      justify-content: center;
+  }
+  .map {
+    order: 3; 
+  }
+  
+  ul.navigation {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+  }
+  
+  
+  footer {
+    display: flex;
+    border-bottom: 2px solid #d7d9da; 
+    
+  }
+  
+  .footer-menu ul{
+    margin-left: 20px;
+    flex-direction: column;      
+  }
+  
+  .footer-nav-container{      
+    width: 20%; 
+  }
+  
+  .footer-menu ul li:not(:last-child) {
+    margin-bottom: 15px; 
+  }
+  
+  .copyright{
+    margin-left: 5%;
+    width: 35%; 
+  }
+  
+  
+  .img-logo {   
+    align-items: center;
+    border-left: 1px solid black;
+    padding-left: 20%;
+    font-size: 14px;
+  }
+  
+  .copyright img{
+    max-height: 20px;
+    max-width: 20px;
+  }
+  
+  .map{
+    width: 100%;
+  }
+  
+  .div-copyright{
+    display: none;
+  }
+  
+  .div-copyright-desktop{
+    background-color: #F0F3F5; 
+    display: block;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  }
+  
+  
+  
+  
+  
+  @media screen and (min-width: 630px) and (max-width: 1000px) {
+  .img-logo {   
+    font-size: 20px;
+  }
+  .copyright img{
+    max-height: 30px;
+    max-width: 30px;
+  }
+  .map{
+    width: 70%;
+  }
+  .whatsapp-button img {
+    width: 60px; 
+  }
+  .copyright .img-logo div{
+    display: block;
+    font-size: x-small;
+  }
+  
+  .copyright .img-logo div input, .copyright .img-logo div textarea{
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    margin-bottom: 4px;
+    width: 80%;
+  }
+  
+  .copyright .img-logo div textarea{
+   width: 80%;
+  }
+  .copyright .img-logo div button{
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 20%;
+  }
+  }
+  
+  
+  
+  @media screen and (min-width: 1000px) {
+  .img-logo {   
+    font-size: 25px;
+  }
+  .copyright img{
+    max-height: 40px;
+    max-width:  40px;
+  }
+  .map{
+    width: 100%;
+  }
+  .whatsapp-button img {
+    width: 60px; 
+  }
+  .copyright .img-logo div{
+    display: block;
+    font-size: large;
+  }
+  .copyright .img-logo div{
+    display: block;
+    font-size: large;
+  }
+  
+  .copyright .img-logo div input, .copyright .img-logo div textarea{
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    margin-bottom: 4px;
+    width: 90%;
+  }
+  
+  .copyright .img-logo div textarea{
+    width: 90%;
+  }
+  .copyright .img-logo div button{
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 30%;
+    background-color: #286CFF;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s;
+  }
+  
+  .copyright .img-logo div button:hover{
+    transform: scale(1.05); 
+  }
+  }
