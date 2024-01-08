@@ -13,5 +13,21 @@ const getProductById = (id) => {
     });
 }
 
+const getPrecioMinimoYMaximo = async () => {
+    try {
+        const result = await db.query(
+          "SELECT MIN(fpreciooferta) AS precio_minimo, MAX(fpreciooferta) AS precio_maximo FROM view_producto",
+          {
+            type: QueryTypes.SELECT,
+          }
+        );
+       
+        return result[0]; 
+      } catch (error) {
+        console.error('Error al obtener el precio mínimo y máximo:', error);
+        throw error;
+      }
+}
 
-module.exports = { getAll, getProductById}
+
+module.exports = { getAll, getProductById, getPrecioMinimoYMaximo}

@@ -81,4 +81,25 @@ const getProductById = (req, res) => {
     }));
 }
 
-module.exports = {getAll, addProduct, editProduct, getProductById};
+
+const getPrecioMinimoYMaximo = async (req, res) => {
+    try {
+        const response = await ViewProductModel.getPrecioMinimoYMaximo();
+
+        if(response){
+            res.status(200).send({ 
+                "data": response,
+                "success": true
+            });
+        }else{
+            res.status(404).send({
+                'msg' : "hubo un error al obtener el precio minimo y maximo"
+            })
+        }
+    }catch(error){
+        console.log(error)
+        res.status(404).send({'msg' : "Error al obtener precio minimo y maximo", 'success': false  })
+    }
+}
+
+module.exports = {getAll, addProduct, editProduct, getProductById, getPrecioMinimoYMaximo};

@@ -18,5 +18,6 @@ ProductRouter.put("/editProduct/:id", [checkSessionAdmin, idRequired, validateNa
 
 ProductRouter.get("/getProductById/:id", [idRequired, validarErrores], ProductController.getProductById);
 
+ProductRouter.get("/getPrecioMinimoYMaximo",  ProductController.getPrecioMinimoYMaximo);
 
 module.exports = ProductRouter;
