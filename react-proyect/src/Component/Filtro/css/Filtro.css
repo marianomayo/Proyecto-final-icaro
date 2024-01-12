@@ -1,0 +1,28 @@
+
+.filtro{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label{
+    font-size: small;
+}
+.filtro-btn {
+    margin-top: 5px;
+    width: 100px;
+    padding: 3px 3px; 
+    cursor: pointer;  
+}
+
+.filtro-btn:hover{
+    
+    background-color: #F0F3F5;
+   
+}
+
+.btn-filtros-container{
+    display: flex;
+    justify-content: center;
+
+}

@@ -1,0 +1,89 @@
+.card {
+    background-color: #F0F3F5;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 1200px; 
+    width: 80%; 
+    margin: 0 auto; 
+}
+
+.card h2 {
+    font-family: 'PT Serif', serif;
+    border-bottom: 1px solid #CFD9E0;
+}
+
+.form-group {
+    margin: 10px 0;
+}
+
+.form-group label {
+    font-family: 'PT Serif', serif;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group button {
+    width: auto;
+    padding: 10px;
+    background-color: #286CFF;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center; 
+    display: block; 
+    margin: 0 auto; 
+}
+
+
+.card h2.login{
+    display: none;
+}
+
+.card .forgotpassword p{
+    padding-top: 8px;
+    padding-bottom: 8px;
+ 
+}
+.card .forgotpassword p a{
+    text-decoration: none;
+    color: #286CFF;
+    font-size: small;
+}
+
+.line {
+    height: 2px; 
+    background-color: #CFD9E0; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card .question-acount{
+    text-align: center; 
+    margin-top: 20px; 
+}
+
+.card .question-acount p, .card .question-acount p span{
+    font-size: small;
+}
+
+.card .question-acount p span a{
+    text-decoration: none;
+}
+
+@media screen and (min-width: 450px){
+    .card h2.login{
+        display: block;
+    }
+    
+}

@@ -55,9 +55,9 @@
   cursor: pointer;
   }
   
-  ul.navigation li:hover {
-  border-radius: 10px;
-  box-shadow: 0 0 5px #cdd0d2; 
+  ul.navigation li.hover-effect:hover {
+    border-radius: 10px;
+    box-shadow: 0 0 5px #cdd0d2;
   }
   
   .banner{
@@ -212,7 +212,9 @@
   }
   
   
-  
+  header{
+    margin-bottom: 15px;
+  }
   
   
   @media screen and (min-width: 630px) and (max-width: 1000px) {

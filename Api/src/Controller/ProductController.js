@@ -70,15 +70,27 @@ const editProduct = async (req, res) => {
     
 }
 
-const getProductById = (req, res) => {
-
-    const idParams = Number(req.params.id);
+const getProductById = async (req, res) => {
+    try{
+        const idParams = Number(req.params.id);
+        const response = await ViewProductModel.getProductById(idParams);
+        console.log(idParams)
+        if(response.length > 0){
+            res.status(200).send({ 
+                "data": response,
+                "success": true
+            });
+        }else{
+            res.status(404).send({
+                'msg' : `El product ${idParams} al cual intentas acceder, no existe en la Base de Datos.`
+            })
+        }
+    }catch(error){
+        console.log(error)
+        res.status(404).send({'msg' : "Error al obtener el producto", 'success': false  })
+    }
     
-    ViewProductModel.getProductById(idParams).then((product) => {
-        res.status(200).send({ product });
-    }).catch((e) => res.status(404).send({
-        'msg' : `Error al obtener producto ${idParams}`
-    }));
+  
 }
 
 
