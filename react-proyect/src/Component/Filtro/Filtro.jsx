@@ -19,6 +19,7 @@ const Filtro = ({ onFilterChange }) => {
     precioMaximo: 0,
     categoria: '',
     marca: '',
+    orden: '',
   });
 
  
@@ -26,6 +27,10 @@ const Filtro = ({ onFilterChange }) => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFiltros((prevFiltros) => ({ ...prevFiltros, [name]: value }));
+  };
+
+  const handleOrdenChange = (value) => {
+    setFiltros((prevFiltros) => ({ ...prevFiltros, orden: value }));
   };
 
   const handlePrecioMinimoChange = (event) => {
@@ -54,6 +59,7 @@ const Filtro = ({ onFilterChange }) => {
       precioMaximo: 0,
       categoria: '',
       marca: '',
+      orden: '',
     })
     onFilterChange({
       nombre: '',
@@ -61,6 +67,7 @@ const Filtro = ({ onFilterChange }) => {
       precioMaximo: 0,
       categoria: '',
       marca: '',
+      orden: '',
     });
   }
 
@@ -112,6 +119,18 @@ const Filtro = ({ onFilterChange }) => {
           ))}
         </Select>
         </label>
+         <label>
+        Ordenar por:
+        <Select
+          value={filtros.orden}
+          style={{ width: 150 }}
+          onChange={handleOrdenChange}
+        >
+          <Option value="">Selecciona orden</Option>
+          <Option value="menor_precio">Menor Precio</Option>
+          <Option value="mayor_precio">Mayor Precio</Option>
+        </Select>
+      </label>
         <div className='btn-filtros-container'>
       
           <Button style={{ marginRight: '10px' }} icon={<SearchOutlined />}  onClick={aplicarFiltros}>Filtrar</Button>    

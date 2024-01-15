@@ -31,6 +31,7 @@ const ProductList = () => {
     precioMaximo: 0,
     marca: '',
     categoria: '',
+    orden: ''
   });
 
   useEffect(() => {
@@ -71,6 +72,12 @@ const ProductList = () => {
       productosFiltrados = productosFiltrados.filter(
         (producto) => producto.idcategoria === parseInt(filters.categoria)
       );
+    }
+
+    if (filters.orden === 'mayor_precio') {
+      productosFiltrados.sort((a, b) => b.fpreciooferta - a.fpreciooferta); 
+    } else if (filters.orden === 'menor_precio') {
+      productosFiltrados.sort((a, b) => a.fpreciooferta - b.fpreciooferta); 
     }
 
     setFilteredProducts(productosFiltrados);

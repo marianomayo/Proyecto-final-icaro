@@ -48,11 +48,14 @@ const editProduct = async (req, res) => {
     
     try {
         const idParams = Number(req.params.id);
-
+        if(req.body.boferta === 0){
+            req.body.tsofertahasta = '2024-12-31 12:00:00';
+        }
         const response = await ProductModel.editProduct(idParams, req.body);
+
         if(response){
             res.status(200).send({ 
-                "message": `El producto ${req.body.nombre} fue actualizado correctamente`,
+                "message": `El producto ${req.body.vnombre} fue actualizado correctamente`,
                 'success': true
             });
         }else{

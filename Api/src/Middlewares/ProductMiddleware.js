@@ -2,7 +2,7 @@ const { body, param } = require("express-validator");
 const { getBrandById } = require('../Model/BrandModel');
 const { getCategoriaById } = require('../Model/CategoriasModel');
 
-const validateName = body("nombre") 
+const validateName = body("vnombre") 
   .notEmpty()
   .withMessage("El nombre es obligatorio")
   .isString()
@@ -13,7 +13,7 @@ const validateName = body("nombre")
   })
   .withMessage("El nombre no debe ser mayor a 150 caracteres");
 
-  const validateDescription = body("descripcion") 
+  const validateDescription = body("tdescripcion") 
   .notEmpty()
   .withMessage("La descripcion es obligatoria")
   .isString()
@@ -30,11 +30,11 @@ const validateName = body("nombre")
   .withMessage("El precio es obligatorio")
   .isNumeric()
   .withMessage("El precio debe ser un numero")
-  .isFloat({ min: 0 })
-  .withMessage("El precio debe ser mayor que 0");
+  .isFloat({ min: 1 })
+  .withMessage("El precio debe ser mayor o igual a 1");
 
 
-const validateBrand = body("nmarca") 
+const validateBrand = body("id_marca") 
 .notEmpty()
 .withMessage("La marca es obligatoria");
 
@@ -61,9 +61,9 @@ const existCategoria = async (req, res, next) => {
 
 const existMarca = async (req, res, next) => {
 
-  const {nmarca} = req.body;
-  if(nmarca !== undefined){
-    const marca = await getBrandById(nmarca);
+  const {id_marca} = req.body;
+  if(id_marca !== undefined){
+    const marca = await getBrandById(id_marca);
     if(marca.length > 0){
       next();
     }else{

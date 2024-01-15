@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import '../Headers-Footer/css/header-footer.css';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { Button, Modal, Space } from 'antd';
 import { LoginOutlined } from '@ant-design/icons';
+import { useUserStore } from '../../Store/useUserStore';
 
 function Header() {
 
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const current_user = useUserStore((state) => state);
+  const logout = useUserStore((state) => state.logout);
 
   const handleOk = () => {
-    setIsAuthenticated((prevAuth) => ({ ...prevAuth, isLogged: false }));
+  
+    logout();
     setOpen(false);
+    navigate('/');
   };
 
   const handleCancel = () => {
@@ -31,10 +37,7 @@ function Header() {
   }
 
  
-  const [isAuthenticated, setIsAuthenticated] = useState({
-    isLogged: false,
-    isAdmin: false,
-  });
+  console.log(current_user.usuario.administrador)
 
   return (
     <header>
@@ -47,14 +50,17 @@ function Header() {
       <div className="menu">
         <ul className="navigation">
         <li className='hover-effect'><Link to={"/"}>Home</Link></li>
-        {isAuthenticated.isLogged ? null : <li  className='hover-effect'><Link to={"/login"}>Ingresar</Link></li>}
-        {isAuthenticated.isLogged ? null : <li  className='hover-effect'><Link to={"/signup"}>Registrarse</Link></li>}
-        {isAuthenticated.isLogged ? <li  className='hover-effect'><Link to={"/carrito"}>Carrito</Link></li> : null}  
-        {isAuthenticated.isLogged ? <li>
-          Hola {isAuthenticated.user} <LoginOutlined style={{ color: 'red', cursor: 'pointer' }} onClick={() => {
+        {current_user.isLogged ? null : <li  className='hover-effect'><Link to={"/login"}>Ingresar</Link></li>}
+        {current_user.isLogged ? null : <li  className='hover-effect'><Link to={"/signup"}>Registrarse</Link></li>}
+        {current_user.isLogged && !current_user.usuario.administrador ? <li  className='hover-effect'><Link to={"/carrito"}>Carrito</Link></li> : null}  
+
+        {current_user.isLogged && current_user.usuario.administrador ? <li  className='hover-effect'><Link to={"/backproduct"}>Productos</Link></li> : null}  
+
+        {current_user.isLogged ? <li>
+          Hola {current_user.usuario.administrador && 'Administrador '} {current_user.usuario.nombre}  <LoginOutlined style={{ color: 'red', cursor: 'pointer' }} onClick={() => {
             Modal.confirm({
               title: 'Desea cerrar su sesion?',
-              onOk: handleOk, 
+              onOk: handleOk,
               onCancel: handleCancel,
               footer: (_, { OkBtn, CancelBtn }) => (
                 <>

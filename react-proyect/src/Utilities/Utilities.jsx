@@ -1,3 +1,4 @@
+import { Modal } from 'antd';
 export const cortarTexto = (texto, longitud) => {
     return texto.length > longitud ? `${texto.slice(0, longitud)}...` : texto;
 };
@@ -28,3 +29,23 @@ export const modificarEstiloElemento = (bofertavalida) => {
       empujar
     }
 }
+
+
+export const errorModal = (error) => {
+  console.log(error);
+  Modal.error({
+    title: '',
+    content: error,
+  });
+}
+
+export const confirmMessage = (msg) => {
+  const modal = Modal.success({
+    content: msg,
+    okButtonProps: {
+      style: { display: 'none' },
+    },
+  });
+
+  return modal; 
+};

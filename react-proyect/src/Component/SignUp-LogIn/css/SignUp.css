@@ -45,6 +45,10 @@
     display: block; 
     margin: 0 auto; 
 }
+.form-group button:disabled {
+    background-color: #d1cccc; 
+    cursor: not-allowed; 
+}
 
 
 .card h2.login{
