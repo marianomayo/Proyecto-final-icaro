@@ -1,24 +1,29 @@
 
 import React from 'react';
 import '../Headers-Footer/css/header-footer.css';
+import { Link } from 'react-router-dom';
+import { useUserStore } from '../../Store/useUserStore';
+import { FacebookOutlined, InstagramOutlined, TwitterOutlined, WhatsAppOutlined } from '@ant-design/icons';
 
 function Footer() {
+
+    const current_user = useUserStore();
+
   return (
-  <div>
+  <>
       <footer>
-      <div className="whatsapp-button">
-            <a href="" target="_blank">
-                <img src="/assets/icons/whatsapp.png" alt="WhatsApp"/>
-            </a>
+      <div className="whatsapp-button">           
+                <WhatsAppOutlined style={{fontSize: '50px'}} />            
         </div>
         <div className="footer-nav-container">
             <nav className="footer-menu">
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/">Acerca de Nosotros</a></li>
-                    <li><a href="/login">Log In</a></li>
-                    <li><a href="/signup">Registro</a></li>
-                    <li><a href="/carrito">Mi Carrito</a></li>
+                <li><Link to={'/'}>Home</Link></li>
+                {current_user.isLogged ? null : <li><a href="/login">Log In</a></li>}
+                {current_user.isLogged ? null : <li><a href="/signup">Registro</a></li>}
+                {current_user.isLogged && !current_user.usuario.administrador ? <li><a href="/carrito">Mi Carrito</a></li> : null}
+                {current_user.isLogged && current_user.usuario.administrador ? <li><Link to={"/backproduct"}>Productos</Link></li> : null}
+                {current_user.isLogged && current_user.usuario.administrador ? <li><Link to={"/nuevoproducto"}>Nuevo Producto</Link></li> : null}
                 </ul>
             </nav>
         </div>
@@ -33,9 +38,9 @@ function Footer() {
             <div className="img-logo">
                 <h4>Seguinos</h4>
                 <figure>
-                    <a href="https://twitter.com/?lang=es"><img src='../../assets/icons/x-logo.jpg' alt="x logo"/></a>
-                    <a href="https://www.instagram.com/"><img src="/assets/icons/icono-instagram.jpg" alt="Instagram logo"/></a>
-                    <a href="https://www.facebook.com/"><img src="/assets/icons/facebook-icon.png" alt="facebook logo"/></a>
+                    <TwitterOutlined />
+                    <InstagramOutlined/>
+                    <FacebookOutlined />
                 </figure>
                 <div>
                     <p>Comunicate con Nosotros</p>
@@ -52,7 +57,7 @@ function Footer() {
     <div className="div-copyright-desktop">
         <h3>Copyright 2023</h3>
     </div>
-  </div>
+  </>
   );
 }
 

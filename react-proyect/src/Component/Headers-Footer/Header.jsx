@@ -39,6 +39,7 @@ function Header() {
 
 
   return (
+    
     <header>
       <div className="logo">
         <h1>Teachecommerce</h1>
@@ -54,7 +55,7 @@ function Header() {
         {current_user.isLogged && !current_user.usuario.administrador ? <li  className='hover-effect'><Link to={"/carrito"}>Carrito</Link></li> : null}  
 
         {current_user.isLogged && current_user.usuario.administrador ? <li  className='hover-effect'><Link to={"/backproduct"}>Productos</Link></li> : null}  
-
+        {current_user.isLogged && current_user.usuario.administrador ? <li  className='hover-effect'><Link to={"/nuevoproducto"}>Nuevo Producto</Link></li> : null}  
         {current_user.isLogged ? <li>
           {current_user.usuario.administrador && 'Admin '} {current_user.usuario.nombre}  <LoginOutlined style={{ color: 'red', cursor: 'pointer' }} onClick={() => {
             Modal.confirm({

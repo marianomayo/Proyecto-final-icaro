@@ -31,12 +31,12 @@ const addProduct = async (req, res) => {
             });
         }else{
             res.status(404).send({
-                'msg' : "hubo un error al crear el producto"
+                'message' : "hubo un error al crear el producto"
             })
         }
     }catch(error){
         console.log(error)
-        res.status(404).send({'msg' : "Error al crear el producto", 'success': false  })
+        res.status(404).send({'message' : "Error al crear el producto", 'success': false  })
     }
     
 

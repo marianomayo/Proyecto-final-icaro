@@ -16,7 +16,7 @@ const getProductById = (id) => {
 const addProduct = (vObj, current_admin) => {   
     return db.query(
         `INSERT INTO producto (vnombre, tdescripcion, fprecio, nusuariocreador, id_marca, id_categoria, ncantidad) 
-            VALUES ('${vObj.nombre}', '${vObj.descripcion}', '${vObj.fprecio}', '${current_admin}', '${vObj.nmarca}', '${vObj.idcategoria}', '${vObj.ncantidad}')`
+            VALUES ('${vObj.vnombre}', '${vObj.tdescripcion}', '${vObj.fprecio}', '${current_admin}', '${vObj.id_marca}', '${vObj.idcategoria}', '${vObj.ncantidad}')`
       );
 }
 

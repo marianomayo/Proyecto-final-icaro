@@ -10,7 +10,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DetailProduct from './Component/Product/DetailProduct';
 import { useUserStore } from './Store/useUserStore';
 import ProductBackOffice from './Component/BackOffice/ProductBackOffice';
-
+import NuevoProducto from './Component/BackOffice/NuevoProducto';
 function App() {
 
   const current_user = useUserStore((state) => state);
@@ -58,6 +58,15 @@ function App() {
           <Route path="/backproduct"          element={
             current_user.isLogged && current_user.usuario.administrador ? (
               <ProductBackOffice />
+            ) : (
+              <Navigate to="/" replace={true} />
+            )
+          }
+        />
+
+          <Route path="/nuevoproducto"          element={
+            current_user.isLogged && current_user.usuario.administrador ? (
+              <NuevoProducto />
             ) : (
               <Navigate to="/" replace={true} />
             )
