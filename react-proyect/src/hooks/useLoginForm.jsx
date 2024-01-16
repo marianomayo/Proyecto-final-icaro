@@ -50,15 +50,22 @@ const useLoginForm = () => {
             formData.apellido = userObj.sessionData.apellido;
             const modal = confirmMessage(`Hola ${userObj.sessionData.vfullname} !!`);
     
+            
+                
+            await new Promise(resolve => {
+                setTimeout(() => {
+                    modal.destroy();
+
+                    resolve();
+                }, 2000);
+            });
+
             saveState(formData);
-            setTimeout(() => {
-                modal.destroy();
-                navigate("/");
-            }, 2500);
+            navigate("/");
     
             }else{
             
-            throw new Error(response);
+                throw response;
             }
         } catch (error) {
         

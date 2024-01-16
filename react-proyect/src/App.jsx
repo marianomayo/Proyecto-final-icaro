@@ -12,9 +12,13 @@ import { useUserStore } from './Store/useUserStore';
 import ProductBackOffice from './Component/BackOffice/ProductBackOffice';
 
 function App() {
+
   const current_user = useUserStore((state) => state);
-  console.log(current_user);
+  
   const RedirectToHome = () => <Navigate to="/" replace={true} />;
+
+  console.log(current_user);
+  
   return (
     <BrowserRouter>
       <>
@@ -49,8 +53,7 @@ function App() {
               element={<Navigate to="/login" replace={true} />}
             />
           )}
-
-      
+     
 
           <Route path="/backproduct"          element={
             current_user.isLogged && current_user.usuario.administrador ? (

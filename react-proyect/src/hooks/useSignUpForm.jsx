@@ -61,11 +61,16 @@ const useSignUpForm = () => {
         formData.vfullname = userObj.sessionData.vfullname;
         const modal = confirmMessage(`Su registro ha sido realizado con éxito`);
 
+        await new Promise(resolve => {
+          setTimeout(() => {
+              modal.destroy();
+
+              resolve();
+          }, 2000);
+        });
+
         saveState(formData);
-        setTimeout(() => {
-          modal.destroy();
-          navigate("/");
-        }, 2500);
+        navigate("/");
 
       }else{
       

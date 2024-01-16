@@ -36,8 +36,7 @@ function Header() {
     document.querySelector(".navigation").classList.toggle("show");
   }
 
- 
-  console.log(current_user.usuario.administrador)
+
 
   return (
     <header>

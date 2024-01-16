@@ -12,7 +12,6 @@ const ProductBackOffice = () => {
     const { productData} = useProduct();
     const {marcas} = useMarca();
     const {categorias} = useCategory();
-    const [editingKeys, setEditingKeys] = useState([]);
     const [copiedProductData, setCopiedProductData] = useState([]);
 
     useEffect(() => {
@@ -22,10 +21,7 @@ const ProductBackOffice = () => {
       }, [productData]);
 
 
-    const handleChange = (value, idProducto, columnName) => {
-        console.log(value);
-        console.log(idProducto);
-        console.log(columnName);
+    const handleChange = (value, idProducto, columnName) => {      
         setCopiedProductData((prevCopiedData) =>
         prevCopiedData.map((product) =>
             product.id_producto === idProducto ? { ...product, [columnName]: value } : product
@@ -46,12 +42,12 @@ const ProductBackOffice = () => {
             const response = await axios.put(`/Api/product/editProduct/${record.id_producto}`, record);  
             if(response.status === 200){
               
-                const modal = confirmMessage(response.data.message);    
-                
-                setTimeout(() => {
-                    modal.destroy();
-                }, 1000);
-                }
+              const modal = confirmMessage(response.data.message);    
+              
+              setTimeout(() => {
+                  modal.destroy();
+              }, 1000);
+            }
         } catch (error) {
             
             if (error.response && error.response.data && error.response.data.message) {
