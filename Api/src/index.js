@@ -30,7 +30,10 @@ app.use(
     secret: "secreto123",
     resave: false,
     saveUninitialized: false,
-    cookie: {maxAge: 60 * 60 * 100},
+    rolling: true, 
+    cookie: {
+      maxAge: 60 * 60 * 1000, 
+    },
   })
 );
 

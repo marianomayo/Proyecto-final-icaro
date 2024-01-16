@@ -98,7 +98,7 @@ const ProductList = () => {
           <Filtro onFilterChange={handleFilterChange} />
         </Sider>
         <Content style={contentStyle}> <ContainerCard>
-        {filteredProducts.map((producto, index) => (
+        {filteredProducts.filter((producto) => producto.bhabilitado === 1).map((producto, index) => (
           <Product
             key={`product-card-${producto.id_producto}`}
             {...producto}

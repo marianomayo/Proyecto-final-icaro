@@ -22,13 +22,17 @@ const ProductBackOffice = () => {
 
 
     const handleChange = (value, idProducto, columnName) => {      
-        setCopiedProductData((prevCopiedData) =>
-        prevCopiedData.map((product) =>
-            product.id_producto === idProducto ? { ...product, [columnName]: value } : product
-        )
-        );
-    };
+      const formattedDate = columnName === 'tsofertahasta' ? formatDatePickerValue(value) : value;
 
+      setCopiedProductData((prevCopiedData) =>
+        prevCopiedData.map((product) =>
+          product.id_producto === idProducto ? { ...product, [columnName]: formattedDate } : product
+        )
+      );
+    };
+    const formatDatePickerValue = (value) => {
+      return value ? moment(value).format('YYYY-MM-DD HH:mm:ss') : null;
+    };
 
     const edit = async (record) => {
 
@@ -163,38 +167,53 @@ const ProductBackOffice = () => {
             },
         },
         {
-            title: 'Oferta',
-            dataIndex: 'boferta',
-            key: 'boferta',
-            render: (text, record) => (
-              text === 1 ? (
-                <>
-                  <Select
-                    defaultValue="Si"
-                    onChange={(value) => handleChange(value, record.id_producto, 'boferta')}
-                  >
-                    <Select.Option value={1}>Si</Select.Option>
-                    <Select.Option value={0}>No</Select.Option>
-                  </Select>
-                  {record.boferta === 1 && (
-                    <DatePicker
-                      showTime
-                      value={record.tsofertahasta ? moment(record.tsofertahasta) : null}
-                      onChange={(date, dateString) => handleChange(dateString, record.id_producto, 'tsofertahasta')}
-                    />
-                  )}
-                </>
-              ) : (
+          title: 'Oferta',
+          dataIndex: 'boferta',
+          key: 'boferta',
+          render: (text, record) => (
+            text === 1 ? (
+              <>
                 <Select
-                  defaultValue="No"
+                  defaultValue="Si"
                   onChange={(value) => handleChange(value, record.id_producto, 'boferta')}
                 >
                   <Select.Option value={1}>Si</Select.Option>
                   <Select.Option value={0}>No</Select.Option>
                 </Select>
-              )
-            ),
-          },
+                {record.boferta === 1 && (
+                  <DatePicker
+                    showTime
+                    value={record.tsofertahasta ? moment(record.tsofertahasta) : null}
+                    onChange={(date, dateString) => handleChange(dateString, record.id_producto, 'tsofertahasta')}
+                  />
+                )}
+              </>
+            ) : (
+              <Select
+                defaultValue="No"
+                onChange={(value) => handleChange(value, record.id_producto, 'boferta')}
+              >
+                <Select.Option value={1}>Si</Select.Option>
+                <Select.Option value={0}>No</Select.Option>
+              </Select>
+            )
+          ),
+        },
+        
+        {
+          title: 'Habilitado',
+          dataIndex: 'bhabilitado',
+          key: 'bhabilitado',
+          render: (text, record) => (
+              <Select
+                  defaultValue={text === 1 ? "Sí" : "No"}
+                  onChange={(value) => handleChange(value, record.id_producto, 'bhabilitado')}
+              >
+                  <Select.Option value={1}>Sí</Select.Option>
+                  <Select.Option value={0}>No</Select.Option>
+              </Select>
+          ),
+        },
         {
         title: 'Acciones',
         dataIndex: 'actions',
@@ -211,15 +230,15 @@ const ProductBackOffice = () => {
     ];
 
     return (
-        <div style={{padding: '20px'}}>
-            <Table
-            rowKey="id_producto"
-            dataSource={copiedProductData}
-            columns={columns}
-            pagination={false}
-            
-            />
-        </div>
+       
+        <Table
+        rowKey="id_producto"
+        dataSource={copiedProductData}
+        columns={columns}
+        pagination={false}
+        
+        />
+    
     );
 };
 

@@ -22,7 +22,7 @@ const addProduct = (vObj, current_admin) => {
 
 const editProduct = (id, vObj) => {
     return db.query(
-      `UPDATE producto SET vnombre = '${vObj.vnombre}', tdescripcion = '${vObj.tdescripcion}', fprecio = ${vObj.fprecio}, id_marca = ${vObj.id_marca}, id_categoria = ${vObj.idcategoria}, ncantidad = ${vObj.ncantidad}, boferta = ${vObj.boferta}, tsofertahasta = '${vObj.tsofertahasta}' WHERE id_producto = ${id}`
+      `UPDATE producto SET vnombre = '${vObj.vnombre}', tdescripcion = '${vObj.tdescripcion}', fprecio = ${vObj.fprecio}, id_marca = ${vObj.id_marca}, id_categoria = ${vObj.idcategoria}, ncantidad = ${vObj.ncantidad}, boferta = ${vObj.boferta}, tsofertahasta = '${vObj.tsofertahasta}', bhabilitado = '${vObj.bhabilitado}' WHERE id_producto = ${id}`
     );
 }
 
