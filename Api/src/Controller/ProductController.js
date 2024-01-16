@@ -2,6 +2,7 @@ const ProductModel = require('../Model/ProductModel');
 const ViewProductModel = require('../Model/ViewProductModel');
 const BrandModel = require('../Model/BrandModel');
 const CategoriaModel = require('../Model/CategoriasModel');
+const ViewComentarios = require('../Model/ViewComentarios');
 
 const getAll = async (req, res) => {    
 
@@ -84,10 +85,11 @@ const getProductById = async (req, res) => {
     try{
         const idParams = Number(req.params.id);
         const response = await ViewProductModel.getProductById(idParams);
-        console.log(idParams)
+        const responseComentarios = await ViewComentarios.getComentariosProducto(idParams);
         if(response.length > 0){
             res.status(200).send({ 
                 "data": response,
+                "comentarios": responseComentarios,
                 "success": true
             });
         }else{
@@ -124,4 +126,21 @@ const getPrecioMinimoYMaximo = async (req, res) => {
     }
 }
 
-module.exports = {getAll, addProduct, editProduct, getProductById, getPrecioMinimoYMaximo};
+const getComentariosById = async (req, res) => {
+    try{
+        const idParams = Number(req.params.id);
+        const response = await ViewComentarios.getComentariosProducto(idParams);
+        
+        if(response.length > 0){
+            res.status(200).send({ 
+                "data": response,
+                "success": true
+            });
+        }
+    }catch(error){
+        console.log(error)
+        res.status(404).send({'msg' : "Error al obtener comentarios", 'success': false  })
+    }
+}
+
+module.exports = {getAll, addProduct, editProduct, getProductById, getPrecioMinimoYMaximo, getComentariosById};

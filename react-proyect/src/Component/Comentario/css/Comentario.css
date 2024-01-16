@@ -1,0 +1,12 @@
+span{
+    font-weight: bold;
+    font-size: larger;
+}
+
+.descripcion{
+    margin: 0;
+    max-width: 80%; 
+    word-wrap: break-word;
+    text-align: justify;
+    font-weight: 550;
+}

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Image, Alert } from 'antd';
-import { disponibilidadStock } from '../../Utilities/Utilities';
 import { Descriptions } from 'antd';
+import { disponibilidadStock } from '../../Utilities/Utilities';
 import './css/DetailProduct.css';
 import axios from 'axios';
 
@@ -57,7 +57,7 @@ const DetailProduct = () => {
                                 <Descriptions.Item label="Marca">{productDetails.vmarca}</Descriptions.Item>
                                 <Descriptions.Item label="Categoría">{productDetails.vcategoria}</Descriptions.Item>
                                 <Descriptions.Item label="Precio">${productDetails.fpreciooferta}</Descriptions.Item>
-                                <Descriptions.Item label="Stock">{disponibilidadStock(productDetails.ncantidad)}</Descriptions.Item>
+                                <Descriptions.Item label="Precio">{disponibilidadStock()}</Descriptions.Item>
                             </Descriptions>
                             {productDetails.bofertavalida === 1 && (
                                 <Descriptions title="Oferta" column={1}>

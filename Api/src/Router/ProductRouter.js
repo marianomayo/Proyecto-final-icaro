@@ -20,4 +20,6 @@ ProductRouter.get("/getProductById/:id", [idRequired, validarErrores], ProductCo
 
 ProductRouter.get("/getPrecioMinimoYMaximo",  ProductController.getPrecioMinimoYMaximo);
 
+ProductRouter.get("/getComentariosById/:id", [idRequired, validarErrores], ProductController.getComentariosById);
+
 module.exports = ProductRouter;
