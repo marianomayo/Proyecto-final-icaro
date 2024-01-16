@@ -21,6 +21,7 @@ const Filtro = ({ onFilterChange }) => {
     marca: '',
     orden: '',
     disponibilidad: '',
+    oferta: ''
   });
 
  
@@ -33,6 +34,10 @@ const Filtro = ({ onFilterChange }) => {
   const handleOrdenChange = (value) => {
     setFiltros((prevFiltros) => ({ ...prevFiltros, orden: value }));
   };
+
+  const handleOferta = (value) => {
+    setFiltros((prevFiltros) => ({ ...prevFiltros, oferta: value }));
+  }
 
   const handlePrecioMinimoChange = (event) => {
     const value = parseInt(event.target.value, 10);
@@ -66,6 +71,7 @@ const Filtro = ({ onFilterChange }) => {
       marca: '',
       orden: '',
       disponibilidad: '',
+      oferta: ''
     })
     onFilterChange({
       nombre: '',
@@ -75,6 +81,7 @@ const Filtro = ({ onFilterChange }) => {
       marca: '',
       orden: '',
       disponibilidad: '',
+      oferta: ''
     });
   }
 
@@ -149,6 +156,18 @@ const Filtro = ({ onFilterChange }) => {
           <Option value="disponible">Stock Disponible</Option>
           <Option value="stock_bajo">Stock Bajo</Option>
           <Option value="sin_stock">S/Stock</Option>
+        </Select>
+      </label>
+      <label>
+        Oferta:
+        <Select
+          value={filtros.oferta}
+          style={{ width: 150 }}
+          onChange={handleOferta}
+        >
+          <Option value="">Selecciona disponibilidad</Option>
+          <Option value="oferta_si">Si</Option>
+          <Option value="oferta_no">No</Option>
         </Select>
       </label>
         <div className='btn-filtros-container'>

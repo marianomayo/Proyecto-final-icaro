@@ -88,6 +88,12 @@ const ProductList = () => {
       productosFiltrados = productosFiltrados.filter((producto) => producto.ncantidad === 0);
     }
 
+    if(filters.oferta === 'oferta_si'){
+      productosFiltrados = productosFiltrados.filter((producto) => producto.boferta == 1);
+    }else if(filters.oferta === 'oferta_no'){
+      productosFiltrados = productosFiltrados.filter((producto) => producto.boferta == 0);
+    }
+
     setFilteredProducts(productosFiltrados);
   }, [productData, filters]);
 
