@@ -56,7 +56,7 @@ function Header() {
         {current_user.isLogged && current_user.usuario.administrador ? <li  className='hover-effect'><Link to={"/backproduct"}>Productos</Link></li> : null}  
 
         {current_user.isLogged ? <li>
-          Hola {current_user.usuario.administrador && 'Administrador '} {current_user.usuario.nombre}  <LoginOutlined style={{ color: 'red', cursor: 'pointer' }} onClick={() => {
+          {current_user.usuario.administrador && 'Admin '} {current_user.usuario.nombre}  <LoginOutlined style={{ color: 'red', cursor: 'pointer' }} onClick={() => {
             Modal.confirm({
               title: 'Desea cerrar su sesion?',
               onOk: handleOk,

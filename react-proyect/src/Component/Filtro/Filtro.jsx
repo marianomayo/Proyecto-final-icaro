@@ -20,6 +20,7 @@ const Filtro = ({ onFilterChange }) => {
     categoria: '',
     marca: '',
     orden: '',
+    disponibilidad: '',
   });
 
  
@@ -43,6 +44,10 @@ const Filtro = ({ onFilterChange }) => {
     setFiltros((prevFiltros) => ({ ...prevFiltros, precioMaximo: value }));
   };
 
+  const handleDisponibilidadChange = (value) => {
+    setFiltros((prevFiltros) => ({ ...prevFiltros, disponibilidad: value }));
+  };
+
   const aplicarFiltros = () => {
     if (filtros.precioMaximo < filtros.precioMinimo) {
       setFiltros((prevFiltros) => ({ ...prevFiltros, precioMaximo: filtros.precioMinimo }));
@@ -60,6 +65,7 @@ const Filtro = ({ onFilterChange }) => {
       categoria: '',
       marca: '',
       orden: '',
+      disponibilidad: '',
     })
     onFilterChange({
       nombre: '',
@@ -68,6 +74,7 @@ const Filtro = ({ onFilterChange }) => {
       categoria: '',
       marca: '',
       orden: '',
+      disponibilidad: '',
     });
   }
 
@@ -129,6 +136,19 @@ const Filtro = ({ onFilterChange }) => {
           <Option value="">Selecciona orden</Option>
           <Option value="menor_precio">Menor Precio</Option>
           <Option value="mayor_precio">Mayor Precio</Option>
+        </Select>        
+      </label>
+      <label>
+        Disponibilidad:
+        <Select
+          value={filtros.disponibilidad}
+          style={{ width: 150 }}
+          onChange={handleDisponibilidadChange}
+        >
+          <Option value="">Selecciona disponibilidad</Option>
+          <Option value="disponible">Stock Disponible</Option>
+          <Option value="stock_bajo">Stock Bajo</Option>
+          <Option value="sin_stock">S/Stock</Option>
         </Select>
       </label>
         <div className='btn-filtros-container'>

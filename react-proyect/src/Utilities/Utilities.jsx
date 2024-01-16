@@ -30,6 +30,28 @@ export const modificarEstiloElemento = (bofertavalida) => {
     }
 }
 
+export const disponibilidadStock = (ncantidad) => {
+  let statusText;
+  let statusColor;
+  
+  if (ncantidad >= 10) {
+    statusText = "Disponible";
+    statusColor = "green";
+  } else if (ncantidad >= 1 && ncantidad <= 9) {
+    statusText = "Stock Bajo";
+    statusColor = "orange";
+  } else {
+    statusText = "S/Stock";
+    statusColor = "red";
+  }
+
+  return (
+    <span style={{ color: statusColor }}>
+      {statusText}
+    </span>
+  );
+}
+
 
 export const errorModal = (error) => {
   console.log(error);

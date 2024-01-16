@@ -48,9 +48,16 @@ const editProduct = async (req, res) => {
     
     try {
         const idParams = Number(req.params.id);
-        if(req.body.boferta === 0){
+        if(req.body.boferta === 0 || req.body.tsofertahasta == null){
             req.body.tsofertahasta = '2024-12-31 12:00:00';
         }
+        if(req.body.tsofertahasta == null){
+            req.body.tsofertahasta = '2024-12-31 12:00:00';
+        }
+        if(req.body.tsofertahasta.includes('T')){
+            req.body.tsofertahasta = req.body.tsofertahasta.replace('T', ' ').replace('.000Z', '');           
+        }
+        
         const response = await ProductModel.editProduct(idParams, req.body);
 
         if(response){

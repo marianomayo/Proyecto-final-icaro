@@ -80,6 +80,14 @@ const ProductList = () => {
       productosFiltrados.sort((a, b) => a.fpreciooferta - b.fpreciooferta); 
     }
 
+    if (filters.disponibilidad === 'disponible') {
+      productosFiltrados = productosFiltrados.filter((producto) => producto.ncantidad >= 10);
+    } else if (filters.disponibilidad === 'stock_bajo') {
+      productosFiltrados = productosFiltrados.filter((producto) => producto.ncantidad >= 1 && producto.ncantidad <= 9);
+    } else if (filters.disponibilidad === 'sin_stock') {
+      productosFiltrados = productosFiltrados.filter((producto) => producto.ncantidad === 0);
+    }
+
     setFilteredProducts(productosFiltrados);
   }, [productData, filters]);
 

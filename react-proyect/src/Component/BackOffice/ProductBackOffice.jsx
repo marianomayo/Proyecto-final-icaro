@@ -13,7 +13,7 @@ const ProductBackOffice = () => {
     const {marcas} = useMarca();
     const {categorias} = useCategory();
     const [copiedProductData, setCopiedProductData] = useState([]);
-
+  console.log(productData)
     useEffect(() => {
         
         setCopiedProductData([...productData]);        
@@ -33,12 +33,12 @@ const ProductBackOffice = () => {
     const edit = async (record) => {
 
         try {
-           
+            console.log(record);
             if(record.boferta === 1 && record.tsofertahasta == undefined || record.tsofertahasta == ''){
                 throw  'Debe seleccionar una fecha mediante el ok para la oferta';
             }
             
-            console.log(record);
+          
             const response = await axios.put(`/Api/product/editProduct/${record.id_producto}`, record);  
             if(response.status === 200){
               
