@@ -48,6 +48,10 @@ const useLoginForm = () => {
                 formData.vfullname = userObj.sessionData.vfullname;
                 formData.nombre = userObj.sessionData.nombre;
                 formData.apellido = userObj.sessionData.apellido;
+                formData.direccion = userObj.sessionData.direccion;
+                formData.numero = userObj.sessionData.numero;
+                formData.depto = userObj.sessionData.depto;
+                formData.email = userObj.sessionData.email;
                 const modal = confirmMessage(`Hola ${userObj.sessionData.vfullname} !!`);
         
             

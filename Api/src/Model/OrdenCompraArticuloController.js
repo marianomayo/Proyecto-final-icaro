@@ -4,7 +4,7 @@ const { QueryTypes } = require("sequelize");
 const addToCart = (idOrder, vObj) => {
     return db.query(
         `INSERT INTO orden_compra_x_producto (id_orden_compra, id_producto, ncantidad) 
-            VALUES ('${idOrder}', '${vObj.id_producto}', '${vObj.ncantidad}')`
+            VALUES ('${idOrder}', '${vObj.id_producto}', 1)`
       );
 }
 
@@ -12,7 +12,7 @@ const addToCart = (idOrder, vObj) => {
 
 const editCart = (idOrder, vObj) => {   
     return db.query(
-        `UPDATE orden_compra_x_producto SET ncantidad = '${vObj.ncantidad}' 
+        `UPDATE orden_compra_x_producto SET ncantidad = ncantidad + 1 
           WHERE id_orden_compra = ${idOrder} and id_producto = ${vObj.id_producto}`
     );
 }

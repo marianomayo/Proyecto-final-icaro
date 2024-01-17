@@ -7,6 +7,10 @@ export const useUserStore = create((set) => ({
     apellido: "",
     administrador: false,
     vfullname: "",
+    direccion: "",
+    numero: "",
+    depto: "",
+    email: ""
   },
   isLogged: false,
   login: (userData) => {
@@ -17,12 +21,26 @@ export const useUserStore = create((set) => ({
         apellido: userData.apellido,
         administrador: userData.administrador,
         vfullname: userData.vfullname,
+        direccion: userData.direccion,
+        numero: userData.numero,
+        depto: userData.depto,
+        email: userData.email
       },
       isLogged: true,
     });
   },
   logout: () => {
-    set({ usuario: { userId: null, nombre: "", apellido: "", administrador: false, vfullname: "" }, isLogged: false });
+    set(
+      { usuario:
+         { userId: null,
+           nombre: "",
+           apellido: "",
+           administrador: false, 
+           vfullname: "", 
+           direccion: "", 
+           numero: "", 
+           depto: "", 
+           email: "" }, isLogged: false });
   },
 }));
 

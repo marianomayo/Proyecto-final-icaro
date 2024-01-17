@@ -1,20 +1,48 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Headers-Footer/css/header-footer.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useUserStore } from '../../Store/useUserStore';
-import { FacebookOutlined, InstagramOutlined, TwitterOutlined, WhatsAppOutlined } from '@ant-design/icons';
+import { FacebookOutlined, InstagramOutlined, ShoppingCartOutlined, TwitterOutlined, WhatsAppOutlined } from '@ant-design/icons';
+import { useCartStore } from '../../Store/useCartStore';
+import ModalCartPreview from '../Cart/ModalCartPreview';
 
 function Footer() {
 
     const current_user = useUserStore();
+    const cartState = useCartStore();
+    const location = useLocation();
+    const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  
+    
+    useEffect(() => {
+        if(current_user.isLogged && !current_user.usuario.administrador){
+          cartState.getProduct();
+        }else {
+          cartState.resetCart();
+        }      
+      }, [current_user]); 
+
+    const openCartModal = () => {
+        setIsCartModalOpen(true);
+    };
+
+    const closeCartModal = () => {
+        setIsCartModalOpen(false);
+    };
 
   return (
   <>
       <footer>
-      <div className="whatsapp-button">           
-                <WhatsAppOutlined style={{fontSize: '50px'}} />            
-        </div>
+        {current_user.isLogged && !current_user.usuario.administrador && location.pathname !== '/carrito' && cartState.cantidad > 0 ? (
+             <div className="cart-button-fixed">
+             <div className="cart-icon-container" onClick={openCartModal} >
+                 <ShoppingCartOutlined style={{ fontSize: '40px' }} />
+                 <div className="cart-quantity-footer">{cartState.cantidad}</div>
+             </div>
+         </div>
+        ): null}
+       
         <div className="footer-nav-container">
             <nav className="footer-menu">
                 <ul>
@@ -57,6 +85,7 @@ function Footer() {
     <div className="div-copyright-desktop">
         <h3>Copyright 2023</h3>
     </div>
+    <ModalCartPreview isVisible={isCartModalOpen} closeModal={closeCartModal} cartDetail={cartState} />
   </>
   );
 }

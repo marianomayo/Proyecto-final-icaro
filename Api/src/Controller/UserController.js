@@ -33,6 +33,10 @@ const addUser = async (req, res) => {
                 req.session.apellido = getUser[0].vapellido;
                 req.session.administrador = false;
                 req.session.vfullname = getUser[0].vnombre + ', ' + getUser[0].vapellido;
+                req.session.direccion = getUser[0].vdireccion;
+                req.session.numero = getUser[0].nnumero;
+                req.session.depto = getUser[0].vdepto;
+                req.session.email = getUser[0].vemail;
             }else{
                 return res.status(500).json({ msg: 'Hubo un problema al guardar los datos.',  success: false });
             }
@@ -42,7 +46,11 @@ const addUser = async (req, res) => {
                 nombre: req.session.nombre,
                 apellido: req.session.apellido,
                 administrador: req.session.administrador,
-                vfullname: req.session.vfullname
+                vfullname: req.session.vfullname,
+                direccion: req.session.direccion,
+                numero: req.session.numero,
+                depto: req.session.depto,
+                email: req.session.email
               }  });
         } else {          
             res.status(500).json({ msg: 'Error al agregar el usuario.',  success: false });
@@ -73,12 +81,20 @@ const logIn = async (req, res) => {
             req.session.apellido = existingUser[0].vapellido;
             req.session.administrador = false;
             req.session.vfullname = existingUser[0].vnombre + ',' + existingUser[0].vapellido;
+            req.session.direccion = existingUser[0].vdireccion;
+            req.session.numero = existingUser[0].nnumero;
+            req.session.depto = existingUser[0].vdepto;
+            req.session.email = existingUser[0].vemail;
             res.status(200).json({ msg: 'Inicio de sesión exitoso.', success: true, sessionData: {
                 userId: req.session.userId,
                 nombre: req.session.nombre,
                 apellido: req.session.apellido,
                 administrador: req.session.administrador,
-                vfullname: req.session.vfullname
+                vfullname: req.session.vfullname,
+                direccion: req.session.direccion,
+                numero: req.session.numero,
+                depto: req.session.depto,
+                email: req.session.email
               } });
         }else{
             //verificamos si no es un administrador

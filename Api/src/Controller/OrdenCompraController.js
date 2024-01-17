@@ -10,36 +10,36 @@ const addToCart = async (req, res) => {
         const vObjProducto = req.body;
         const current_user =  req.session.userId;
          
-    
         const existOrder = await OrdenCompraModel.getOrderUserInProcess(current_user);        
-        
-        let edicion = false;
+      
         let result = null;
-       
+        let objResultado = null
         if(existOrder.length > 0){
            
             const existOrdenProducto = await OrdenCompraArticuloModel.productoInOrder(existOrder[0].idorden_compra, vObjProducto.id_producto);
           
             if(existOrdenProducto.length > 0) {
-                result = await OrdenCompraArticuloModel.editCart(existOrder[0].idorden_compra, vObjProducto );   
-                edicion = true;
+                result = await OrdenCompraArticuloModel.editCart(existOrder[0].idorden_compra, vObjProducto );  
+               
             }else{
                 result = await OrdenCompraArticuloModel.addToCart(existOrder[0].idorden_compra, vObjProducto)
             }
+            objResultado = await ViewOrdenCompraXArticuloModel.getProductInOrderByUserActive(existOrder[0].idorden_compra, current_user);
         }else{
             
             const idOrder = await OrdenCompraModel.initOrder(current_user);
             
             result = await OrdenCompraArticuloModel.addToCart(idOrder, vObjProducto)
             
+            objResultado = await ViewOrdenCompraXArticuloModel.getProductInOrderByUserActive(idOrder, current_user);
         }
-        
-        if(result) {
-            
-            let message = edicion ? 'Se ha editado las cantidades en el carrito.' : 'Producto Agregado al carrito.';
-            res.status(200).json({ msg: message, success: true });
+
+        const totalCantidad = objResultado.reduce((total, producto) => total + producto.ncantidad, 0);
+        const precioTotal = objResultado.reduce((total, producto) => total + producto.ftotalprecio, 0);
+        if(result) {                        
+            res.status(200).json({ msg: 'Producto Agregado al carrito.', success: true, cantidad: totalCantidad, productos: objResultado, precioTotal: precioTotal });
         }else{
-            res.status(500).json({ msg: 'Hubo un problema al generar la orden del producto', success: true });
+            res.status(400).json({ msg: 'Hubo un problema al agregar el producto al carrito', success: false });
         }
       
         
@@ -52,12 +52,17 @@ const addToCart = async (req, res) => {
 
 const deleteProductCart = async (req, res) => {
     try {
-        const idOrdenCompraProducto = req.body.idorden_compra_x_producto;
-      
-        const result = await OrdenCompraArticuloModel.deleteProductOrder(idOrdenCompraProducto);
+        const current_user =  req.session.userId;
+        const vObjData = req.body;
+       
+        const result = await OrdenCompraArticuloModel.deleteProductOrder(vObjData.idOrdenCompraxproducto);
+        const objResultado = await ViewOrdenCompraXArticuloModel.getProductInOrderByUserActive(vObjData.idOrden, current_user);
+
+        const totalCantidad = objResultado.reduce((total, producto) => total + producto.ncantidad, 0);
+        const precioTotal = objResultado.reduce((total, producto) => total + producto.ftotalprecio, 0);
         if(result){
             
-            res.status(200).json({ msg: 'Producto eliminado del carrito', success: true });
+            res.status(200).json({ msg: 'Producto eliminado del carrito', success: true, cantidad: totalCantidad, productos: objResultado, precioTotal: precioTotal  });
         }  else{
             res.status(404).json({ msg: 'Hubo un problema al borrar el producto del carrito', success: false });
         }
@@ -75,14 +80,19 @@ const getUserOrderInProcess = async(req, res) => {
         const current_user = req.session.userId;
     
         const ordenResult = await OrdenCompraModel.getOrderUserInProcess(current_user);
+
         if(ordenResult.length > 0){
             
             const result = await ViewOrdenCompraXArticuloModel.getProductInOrderByUserActive(ordenResult[0].idorden_compra, current_user);
 
             if(result.length > 0) {
+                const totalCantidad = result.reduce((total, producto) => total + producto.ncantidad, 0);
+                const precioTotal = result.reduce((total, producto) => total + producto.ftotalprecio, 0);
                 res.status(200).json({
                     msg: `Se han recuperado ${result.length} articulos en carrito`,
-                    data: result,
+                    productos: result,
+                    cantidad: totalCantidad,
+                    precioTotal: precioTotal,
                     success: true
                 })
             }else{
@@ -91,7 +101,8 @@ const getUserOrderInProcess = async(req, res) => {
         }else{
             res.status(200).json({
                 msg: `No hay ninguna orden activa por el usuario ${req.session.nombre}`,
-                data: ordenResult,
+                productos: ordenResult,
+                cantidad: 0,
                 success: true
             })
         }
