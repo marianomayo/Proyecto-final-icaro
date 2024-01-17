@@ -18,6 +18,8 @@ const OrderRouter = require("./Router/OrderRouter");
 
 const CategoryRouter = require("./Router/CategoryRouter");
 
+const PedidoRouter = require("./Router/PedidoRouter");
+
 const middlewareDePrueba = (req, res, next) => {
   console.log("Llego una petición al servidor");
   next();
@@ -53,6 +55,8 @@ app.use("/category", CategoryRouter);
 app.use("/user", UserRouter);
 
 app.use("/product", ProductRouter);
+
+app.use("/pedido", PedidoRouter);
 
 app.listen(PORT, () => {
   db.authenticate().then(() => console.log("Conectado a la base de datos!"));

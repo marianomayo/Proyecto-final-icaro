@@ -16,4 +16,12 @@ const initOrder = async (current_user) => {
     return orderId;
 };
 
-module.exports = { getOrderUserInProcess, initOrder };
+const updateOrder = async ( id_orden_compra) => {
+    const result = await db.query(
+        `UPDATE orden_compra set bprocesado = 1, tsprocesado = NOW() where idorden_compra = ${id_orden_compra}`
+    );
+    
+    return result;
+};
+
+module.exports = { getOrderUserInProcess, initOrder, updateOrder };
