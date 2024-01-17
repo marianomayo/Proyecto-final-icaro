@@ -28,7 +28,6 @@ const Cart = () => {
     );
     
     const onChangeSwitch = (checked) => {
-        console.log(`switch to ${checked}`);
         setEnvio(checked);
       };
         

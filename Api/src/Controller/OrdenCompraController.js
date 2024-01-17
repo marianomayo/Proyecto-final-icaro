@@ -1,7 +1,7 @@
 const OrdenCompraModel = require('../Model/OrdenCompraModel');
 const OrdenCompraArticuloModel = require('../Model/OrdenCompraArticuloController');
 const ViewOrdenCompraXArticuloModel = require('../Model/ViewOrdenCompraPorArticulo');
-
+const ViewProductModel = require('../Model/ViewProductModel');
 
 
 const addToCart = async (req, res) => {
@@ -11,14 +11,20 @@ const addToCart = async (req, res) => {
         const current_user =  req.session.userId;
          
         const existOrder = await OrdenCompraModel.getOrderUserInProcess(current_user);        
-      
+        const getProduct = await ViewProductModel.getProductById(vObjProducto.id_producto);
+        const cantidadProducto = getProduct[0].ncantidad;
+
         let result = null;
         let objResultado = null
         if(existOrder.length > 0){
-           
+                                           
             const existOrdenProducto = await OrdenCompraArticuloModel.productoInOrder(existOrder[0].idorden_compra, vObjProducto.id_producto);
-          
             if(existOrdenProducto.length > 0) {
+                const cantidad = existOrdenProducto[0].ncantidad
+               
+                if((cantidad + 1) > cantidadProducto ){
+                    return res.status(400).json({ msg: 'No hay cantidad suficiente para agregar al carrito', success: false });
+                }
                 result = await OrdenCompraArticuloModel.editCart(existOrder[0].idorden_compra, vObjProducto );  
                
             }else{
@@ -26,6 +32,10 @@ const addToCart = async (req, res) => {
             }
             objResultado = await ViewOrdenCompraXArticuloModel.getProductInOrderByUserActive(existOrder[0].idorden_compra, current_user);
         }else{
+
+            if( cantidadProducto < 1 ){
+                return res.status(400).json({ msg: 'No hay cantidad suficiente para agregar al carrito', success: false });
+            }
             
             const idOrder = await OrdenCompraModel.initOrder(current_user);
             

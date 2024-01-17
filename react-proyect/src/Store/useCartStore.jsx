@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
+import {errorModal, confirmMessage} from '../Utilities/Utilities';
 
 export const useCartStore = create((set) => ({
   cart: [],
@@ -15,8 +16,8 @@ export const useCartStore = create((set) => ({
         cantidad: response.data.cantidad,
         precioTotal: response.data.precioTotal
       }));
-    } catch (error) {
-      console.error("Error al agregar el producto al carrito", error);
+    } catch (error) { 
+      errorModal(error.response.data.msg)
     }
   },
   getProduct: async () => {
@@ -29,8 +30,8 @@ export const useCartStore = create((set) => ({
         cantidad: response.data.cantidad,
         precioTotal: response.data.precioTotal
       }));
-    } catch (error) {
-      console.error("Error al obtener los productos", error);
+    } catch (error) {     
+      errorModal(error.response.data.msg)
     }
   },
   resetCart: () => {
@@ -52,6 +53,7 @@ export const useCartStore = create((set) => ({
       }));
     } catch (error) {
       console.error("Error al eliminar el producto del carrito", error);
+      errorModal(error.response.data.msg)
     }
   },
 }));

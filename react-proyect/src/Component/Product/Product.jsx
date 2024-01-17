@@ -24,7 +24,7 @@ const Product = (product) => {
         <Card.Meta title={displayedPrice.precioMostrado} description={shortenedDescription} />
         <Card.Meta description={disponibilidad}  />
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
-        {current_user.isLogged && !current_user.usuario.administrador && Number(product.ncantidad) > 1 ? (
+        {current_user.isLogged && !current_user.usuario.administrador && Number(product.ncantidad) >= 1 ? (
             <Button type="primary" icon={<ShoppingCartOutlined />} style={{ marginRight: '8px' }} onClick={() => addProduct(product)}>
               Añadir
             </Button>
