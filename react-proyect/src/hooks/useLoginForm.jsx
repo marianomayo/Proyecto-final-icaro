@@ -14,7 +14,7 @@ const useLoginForm = () => {
         password: '',
     });
 
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,14 +22,15 @@ const useLoginForm = () => {
         ...prevData,
         [name]: value,
         }));
-        validateForm(name, value);
+        isFormValid();
     };
 
-    const validateForm = (name, value) => {
-        setIsButtonDisabled(
-        (name === 'email' && !/\S+@\S+\.\S+/.test(value)) ||
-        (name === 'password' && (formData.email === '' || value === ''))
-        );
+    const isFormValid = () => {
+        const requiredFields = ['email', 'password'];
+
+        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+
+        return requiredFields.every(field => formData[field].trim() !== '') &&  isValidEmail;
     };
 
     const handleSubmit = async (e) => {
@@ -94,7 +95,7 @@ const useLoginForm = () => {
 
     return {
         formData,
-        isButtonDisabled,
+        isFormValid,
         handleChange,
         handleSubmit,
     };

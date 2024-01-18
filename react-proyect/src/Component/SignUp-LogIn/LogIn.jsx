@@ -4,7 +4,7 @@ import {Link, useLocation} from "react-router-dom";
 import useLoginForm from '../../hooks/useLoginForm';
 const LogIn = () => {
 
-    const { formData, isButtonDisabled, handleChange, handleSubmit } = useLoginForm();
+    const { formData, isFormValid, handleChange, handleSubmit } = useLoginForm();
 
     
   
@@ -40,7 +40,7 @@ const LogIn = () => {
                 </div>
 
                 <div className="form-group">
-                    <button type="submit" disabled={isButtonDisabled}>Ingresar</button>
+                    <button type="submit" disabled={!isFormValid()}>Ingresar</button>
                 </div>
             </form>
             <div>
