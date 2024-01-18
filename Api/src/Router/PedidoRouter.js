@@ -12,4 +12,4 @@ PedidoRouter.get("/getAll", PedidoController.getAll);
 PedidoRouter.post("/generarPedido", [checkSession, validarErrores], PedidoController.generarPedido);
 
 
-module.exports = ProductRouter;
+module.exports = PedidoRouter;
