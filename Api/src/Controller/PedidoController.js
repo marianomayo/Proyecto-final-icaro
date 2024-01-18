@@ -17,12 +17,15 @@ const getAll = async (req, res) => {
 const generarPedido = async (req, res) => {
     try {
         
-        const vObj = req.body;
+        const vObj = req.body;        
+        
         await OrdenCompraModel.updateOrder(vObj.id_orden_compra);
+        
         const pedido = await PedidoModel.generarPedido(vObj);
-        if(pedido){
-            res.status(200).json({ msg: `Se han generado el pedido numero ${pedido}`, data: pedido, success: true });
-        }
+        
+     
+        res.status(200).json({ msg: `Se han generado el pedido numero ${pedido}`, data: pedido, success: true });
+     
         
     } catch (error) {
         console.log(error);

@@ -13,7 +13,11 @@
     margin-right: 6rem;  
 }
 
-
+.unavailable-row {
+    background-color: #ffcccc; 
+    color: #ff0000; 
+  }
+  
 
 .cart-header {
     display: flex;    
@@ -44,3 +48,4 @@
     font-weight: bold;
     font-size: medium;
 }
+

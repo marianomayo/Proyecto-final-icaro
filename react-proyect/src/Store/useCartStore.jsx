@@ -42,7 +42,7 @@ export const useCartStore = create((set) => ({
   },
   deleteProduct: async (vObj) => {
     try {
-    
+  
       const response = await axios.post("/Api/order/deleteProduct", vObj);
 
       // Actualizar el estado con el carrito actualizado
