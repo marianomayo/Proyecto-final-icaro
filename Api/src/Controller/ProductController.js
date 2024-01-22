@@ -3,6 +3,7 @@ const ViewProductModel = require('../Model/ViewProductModel');
 const BrandModel = require('../Model/BrandModel');
 const CategoriaModel = require('../Model/CategoriasModel');
 const ViewComentarios = require('../Model/ViewComentarios');
+const ComentariosModel = require('../Model/ComentariosModel');
 
 const getAll = async (req, res) => {    
 
@@ -134,6 +135,13 @@ const getComentariosById = async (req, res) => {
         if(response.length > 0){
             res.status(200).send({ 
                 "data": response,
+                "msg" : `Hay un total de ${response.length} comentarios`,
+                "success": true
+            });
+        }else{
+            res.status(200).send({ 
+                "data": response,
+                "msg" : `No hay comentarios`,
                 "success": true
             });
         }
@@ -143,4 +151,32 @@ const getComentariosById = async (req, res) => {
     }
 }
 
-module.exports = {getAll, addProduct, editProduct, getProductById, getPrecioMinimoYMaximo, getComentariosById};
+
+const addComentario = async (req, res) => {
+    try{
+        const current_user = req.session.userId;
+        const vObj = req.body;
+        
+        const response = await ComentariosModel.addComentario(vObj, current_user);
+        const comentarios = await ViewComentarios.getComentariosProducto(vObj.id_producto);
+
+        if(comentarios.length > 0){
+            res.status(200).send({ 
+                "data": comentarios,
+                "msg" : `Comentario agregado`,
+                "success": true
+            });
+        }else{
+            res.status(400).send({ 
+                "data": response,
+                "msg" : `Surgio un error`,
+                "success": true
+            });
+        }
+    }catch(error){
+        console.log(error)
+        res.status(404).send({'msg' : "Error al agregar comentarios", 'success': false  })
+    }
+}
+
+module.exports = {getAll, addProduct, editProduct, getProductById, getPrecioMinimoYMaximo, getComentariosById, addComentario};

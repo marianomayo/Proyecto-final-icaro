@@ -5,7 +5,7 @@ const ProductController = require('../Controller/ProductController');
 const { validarErrores } = require("../Middlewares");
 const { idRequired } = require('../Middlewares/ParamsMiddleware');
 const { validateName, validateDescription, validatePrice, validateBrand, validateCategoria, existCategoria, existMarca } = require('../Middlewares/ProductMiddleware');
-const { checkSessionAdmin } = require('../Auth/checkSession');
+const { checkSessionAdmin, checkSession } = require('../Auth/checkSession');
 
 const ProductRouter = Router();
 
@@ -21,5 +21,7 @@ ProductRouter.get("/getProductById/:id", [idRequired, validarErrores], ProductCo
 ProductRouter.get("/getPrecioMinimoYMaximo",  ProductController.getPrecioMinimoYMaximo);
 
 ProductRouter.get("/getComentariosById/:id", [idRequired, validarErrores], ProductController.getComentariosById);
+
+ProductRouter.post("/addComentario", [checkSession, validarErrores], ProductController.addComentario);
 
 module.exports = ProductRouter;
