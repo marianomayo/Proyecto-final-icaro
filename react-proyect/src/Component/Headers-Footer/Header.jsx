@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../Headers-Footer/css/header-footer.css';
 import {Link, useNavigate} from "react-router-dom";
-import { Button, Modal, Space } from 'antd';
-import { LoginOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Modal, Space } from 'antd';
+import { DownOutlined, LoginOutlined } from '@ant-design/icons';
 import { useUserStore } from '../../Store/useUserStore';
 import { useCartStore } from '../../Store/useCartStore';
 
@@ -42,8 +42,35 @@ function Header() {
     document.querySelector(".navigation").classList.toggle("show");
   }
 
-  console.log(cartState.cantidad);
+  const items = [ 
+    // {
+    //   label: <Link to="/pedidos">Pedidos</Link>,
+    //   key: '0', 
+    // },
+    {
+      type: 'divider',
+    },
+    {
+      label: 'Cerrar Sesión',
+      key: '3',
+      onClick: () => {
+        Modal.confirm({
+          title: 'Desea cerrar su sesión?',
+          onOk: handleOk,
+          onCancel: handleCancel,
+          footer: (_, { OkBtn, CancelBtn }) => (
+            <>
+              <CancelBtn />
+              <OkBtn onClick={handleOk}>Cerrar</OkBtn>
+            </>
+          ),
+        });
+      },
+    },
+  ];
+  
 
+  
 
   return (
     
@@ -69,22 +96,19 @@ function Header() {
 
         {current_user.isLogged && current_user.usuario.administrador ? <li  className='hover-effect'><Link to={"/backproduct"}>Productos</Link></li> : null}  
         {current_user.isLogged && current_user.usuario.administrador ? <li  className='hover-effect'><Link to={"/nuevoproducto"}>Nuevo Producto</Link></li> : null}  
-        {current_user.isLogged ? <li>
-          {current_user.usuario.administrador && 'Admin '} {current_user.usuario.nombre}  <LoginOutlined style={{ color: 'red', cursor: 'pointer' }} onClick={() => {
-            Modal.confirm({
-              title: 'Desea cerrar su sesion?',
-              onOk: handleOk,
-              onCancel: handleCancel,
-              footer: (_, { OkBtn, CancelBtn }) => (
-                <>
-                 
-                  <CancelBtn />
-                  <OkBtn onClick={handleOk}>Cerrar</OkBtn>
-                </>
-              ),
-            });
-          }} />
-        </li>   : null}   
+        {current_user.isLogged ? <li><Dropdown
+            menu={{
+              items,
+            }}
+            trigger={['click']}
+          >
+            <a onClick={(e) => e.preventDefault()}>
+              <Space>
+              {current_user.usuario.administrador && 'Admin'}{current_user.usuario.nombre}
+                <DownOutlined />
+              </Space>
+            </a>
+          </Dropdown></li> : null}
         </ul>
       </div>
     </header>
