@@ -89,9 +89,9 @@ const ProductList = () => {
     }
 
     if(filters.oferta === 'oferta_si'){
-      productosFiltrados = productosFiltrados.filter((producto) => producto.boferta == 1);
+      productosFiltrados = productosFiltrados.filter((producto) => producto.bofertavalida == 1);
     }else if(filters.oferta === 'oferta_no'){
-      productosFiltrados = productosFiltrados.filter((producto) => producto.boferta == 0);
+      productosFiltrados = productosFiltrados.filter((producto) => producto.bofertavalida == 0);
     }
 
     setFilteredProducts(productosFiltrados);
