@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import '../Headers-Footer/css/header-footer.css';
 import {Link, useNavigate} from "react-router-dom";
 import { Button, Dropdown, Modal, Space } from 'antd';
-import { DownOutlined, LoginOutlined } from '@ant-design/icons';
+import { DownOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { useUserStore } from '../../Store/useUserStore';
 import { useCartStore } from '../../Store/useCartStore';
+import usePedidosSinProcesarStore from '../../hooks/usePedidoSinProcesar';
 
 function Header() {
 
@@ -13,6 +14,7 @@ function Header() {
   const current_user = useUserStore((state) => state);
   const logout = useUserStore((state) => state.logout);
   const cartState = useCartStore((state) => state);
+  const pedidos = usePedidosSinProcesarStore();
 
   const handleOk = () => {    
     logout();
@@ -27,47 +29,68 @@ function Header() {
 
   useEffect(() => {
     if(current_user.isLogged && !current_user.usuario.administrador){
+
       cartState.getProduct();
+    
     }else {
+      console.log(pedidos)
       cartState.resetCart();
+
     }
+
     document.querySelector(".btn_menu").addEventListener("click", toggleMenu);
 
     return () => {
       document.querySelector(".btn_menu").removeEventListener("click", toggleMenu);
     };
-  }, [current_user]); 
+
+  }, [current_user, pedidos]); 
+
 
   function toggleMenu() {
     document.querySelector(".navigation").classList.toggle("show");
   }
 
-  const items = [ 
-    // {
-    //   label: <Link to="/pedidos">Pedidos</Link>,
-    //   key: '0', 
-    // },
-    {
-      type: 'divider',
-    },
-    {
-      label: 'Cerrar Sesión',
-      key: '3',
-      onClick: () => {
-        Modal.confirm({
-          title: 'Desea cerrar su sesión?',
-          onOk: handleOk,
-          onCancel: handleCancel,
-          footer: (_, { OkBtn, CancelBtn }) => (
-            <>
-              <CancelBtn />
-              <OkBtn onClick={handleOk}>Cerrar</OkBtn>
-            </>
-          ),
-        });
-      },
-    },
-  ];
+  const items = [];
+
+
+if (current_user.isLogged && current_user.usuario.administrador) {
+  items.push({
+    label: (
+      <Link to="/pedidos">
+        Pedidos
+        {current_user.isLogged && current_user.usuario.administrador && pedidos.data.length > 0? (
+            <span className="cart-quantity-pedidos">{pedidos.data.length}</span>
+        ) : null}
+      </Link>
+    ),
+    key: '0',
+  });
+  items.push({
+    type: 'divider',
+  });
+  
+}
+
+
+
+items.push({
+  label: 'Cerrar Sesión',
+  key: '3',
+  onClick: () => {
+    Modal.confirm({
+      title: '¿Desea cerrar su sesión?',
+      onOk: handleOk,
+      onCancel: handleCancel,
+      footer: (_, { OkBtn, CancelBtn }) => (
+        <>
+          <CancelBtn />
+          <OkBtn onClick={handleOk}>Cerrar</OkBtn>
+        </>
+      ),
+    });
+  },
+});
   
 
   
@@ -104,8 +127,16 @@ function Header() {
           >
             <a onClick={(e) => e.preventDefault()}>
               <Space>
-              {current_user.usuario.administrador && 'Admin'}{current_user.usuario.nombre}
-                <DownOutlined />
+              {current_user.usuario.administrador && (
+                <>
+                  Admin {current_user.usuario.nombre}
+                  {pedidos.data.length > 0 && (
+                    <ExclamationCircleOutlined style={{ color: 'red' }} />
+                  )}
+                </>
+              )}
+              {!current_user.usuario.administrador && current_user.usuario.nombre}
+              <DownOutlined />
               </Space>
             </a>
           </Dropdown></li> : null}

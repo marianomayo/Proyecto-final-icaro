@@ -11,6 +11,9 @@ import DetailProduct from './Component/Product/DetailProduct';
 import { useUserStore } from './Store/useUserStore';
 import ProductBackOffice from './Component/BackOffice/ProductBackOffice';
 import NuevoProducto from './Component/BackOffice/NuevoProducto';
+import Pedidos from './Component/Pedidos/Pedidos';
+
+
 function App() {
 
   const current_user = useUserStore((state) => state);
@@ -67,6 +70,16 @@ function App() {
           <Route path="/nuevoproducto"          element={
             current_user.isLogged && current_user.usuario.administrador ? (
               <NuevoProducto />
+            ) : (
+              <Navigate to="/" replace={true} />
+            )
+          }
+        />
+
+        
+        <Route path="/pedidos"          element={
+            current_user.isLogged && current_user.usuario.administrador ? (
+              <Pedidos />
             ) : (
               <Navigate to="/" replace={true} />
             )

@@ -154,8 +154,18 @@
     color: white;
     padding: 0 5px;
     border-radius: 50%;
-    
   }
+
+  .cart-quantity-pedidos {
+    background-color: red;
+    color: white;
+    margin-left: 10px;
+    padding: 0 5px;
+    border-radius: 50%;
+
+  }
+
+
   
   @media screen and (min-width: 450px){
   

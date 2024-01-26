@@ -16,4 +16,11 @@ const generarPedido = async (vObj) => {
     return orderId;
 };
 
-module.exports = { getAll, generarPedido };
+const procesarPedido = (idPedido) => {
+    return db.query(
+        `UPDATE pedido set bprocesado = 1 where idpedido = ${idPedido}`
+    );
+   
+};
+
+module.exports = { getAll, generarPedido, procesarPedido };

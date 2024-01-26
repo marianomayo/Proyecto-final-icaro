@@ -25,5 +25,11 @@ const getCartByUser = (current_user) => {
     });
 }
 
+const getArticulosOrden = (idOrder) => {
+    return db.query(`SELECT * FROM view_orden_compra_x_articulo where id_orden_compra = ${idOrder}`, {
+        type: QueryTypes.SELECT,
+    });
+}
 
-module.exports = { getAll, getCartByUser, getProductCartByUser, getProductInOrderByUserActive}
+
+module.exports = { getAll, getCartByUser, getProductCartByUser, getProductInOrderByUserActive, getArticulosOrden}

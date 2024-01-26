@@ -12,6 +12,7 @@ const inputStyle = { width: '400px' };
 const NuevoProducto = () => {
     const { categorias } = useCategory();
     const { marcas } = useMarca();
+    const [form] = Form.useForm();
     const [formData, setFormData] = useState({
         vnombre: '',
         tdescripcion: '',
@@ -20,11 +21,13 @@ const NuevoProducto = () => {
         idcategoria: '',
         ncantidad: ''
     });
+    const [submittable, setSubmittable] = React.useState(false);
 
     const handleFormSubmit = async (vObj) => {
         try {
             vObj.id_marca = vObj.nmarca;
-           
+            form.resetFields();
+          
             const response = await axios.post('/Api/product/addProduct', vObj);
             
             if (response.status === 200) {
@@ -61,27 +64,34 @@ const NuevoProducto = () => {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} layout="horizontal" onFinish={handleFormSubmit}>
+            <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} layout="horizontal" 
+            onFinish={handleFormSubmit}  form={form} initialValues={{ remember: true }}
+            autoComplete="off"
+            >
                 <label htmlFor="">Nombre: 
                     <Form.Item name="vnombre" rules={[{ required: true, message: 'Por favor ingresa el nombre' },{ max: 150, message: 'El nombre no puede exceder los 150 caracteres' }]}>
-                        <Input style={inputStyle} placeholder='Nombre Producto' onChange={(e) => setFormData({ ...formData, vnombre: e.target.value })} />
+                        <Input style={inputStyle} placeholder='Nombre Producto' 
+                        onChange={(e) => setFormData({ ...formData, vnombre: e.target.value })} />
                     </Form.Item>
                 </label>
                 <label htmlFor="">Descripcion:
                     <Form.Item name="tdescripcion" rules={[{ required: true, message: 'Por favor ingresa la descripción' }]}>
-                        <Input.TextArea style={{ width: '400px'}} placeholder='descripcion del producto' onChange={(e) => setFormData({ ...formData, tdescripcion: e.target.value })} />
+                        <Input.TextArea style={{ width: '400px'}} placeholder='descripcion del producto' 
+                        onChange={(e) => setFormData({ ...formData, tdescripcion: e.target.value })} />
                     </Form.Item>
                 </label>
                 <div style={{display: 'flex', gap: '1rem'}}>
 
                     <label htmlFor="">Precio: 
                         <Form.Item name="fprecio" rules={[{ required: true, message: 'Por favor ingresa el precio' }]}>
-                            <InputNumber style={{ width: '200px'}} placeholder='Precio' onChange={(value) => setFormData({ ...formData, fprecio: value })} />
+                            <InputNumber style={{ width: '200px'}} placeholder='Precio' 
+                            onChange={(value) => setFormData({ ...formData, fprecio: value })} />
                         </Form.Item>
                     </label>
                     <label htmlFor="">Cantidad:
                         <Form.Item name="ncantidad" rules={[{ required: true, message: 'Por favor ingresa la cantidad' }]}>
-                            <InputNumber style={{ width: '180px'}} placeholder='Cantidad' onChange={(value) => setFormData({ ...formData, ncantidad: value })} />
+                            <InputNumber style={{ width: '180px'}} placeholder='Cantidad' 
+                            onChange={(value) => setFormData({ ...formData, ncantidad: value })} />
                         </Form.Item>
                     </label>
 
