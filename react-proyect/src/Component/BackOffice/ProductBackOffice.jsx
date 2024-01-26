@@ -13,10 +13,11 @@ const ProductBackOffice = () => {
     const {marcas} = useMarca();
     const {categorias} = useCategory();
     const [copiedProductData, setCopiedProductData] = useState([]);
-  console.log(productData)
+  
     useEffect(() => {
         
-        setCopiedProductData([...productData]);        
+      const sortedProducts = [...productData].sort((a, b) =>  b.id_producto -a.id_producto);
+      setCopiedProductData(sortedProducts);    
         
       }, [productData]);
 
@@ -235,7 +236,7 @@ const ProductBackOffice = () => {
         rowKey="id_producto"
         dataSource={copiedProductData}
         columns={columns}
-        pagination={false}
+        pagination={true}
         
         />
     
