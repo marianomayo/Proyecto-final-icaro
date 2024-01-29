@@ -12,6 +12,7 @@ import { useUserStore } from './Store/useUserStore';
 import ProductBackOffice from './Component/BackOffice/ProductBackOffice';
 import NuevoProducto from './Component/BackOffice/NuevoProducto';
 import Pedidos from './Component/Pedidos/Pedidos';
+import ErrorPage from './Component/ErrorPage/ErrorPage';
 
 
 function App() {
@@ -48,45 +49,65 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
           )}
 
-          {current_user.isLogged ? (
-            <Route path="/carrito" element={<Cart />} />
-          ) : (
-            <Route
-              path="/login"
-              element={<Navigate to="/login" replace={true} />}
-            />
-          )}
-     
+               
+          
+          <Route
+            path="/carrito"
+            element={
+              current_user.isLogged ? (
+                current_user.usuario.administrador ? (
+                  <ErrorPage status={403} message={'Atención. Usted no posee acceso a esta pagina'}/>
+                ) : (
+                  <Cart />
+                )
+              ) : (
+                <LogIn />
+              )
+            }
+          />
 
-          <Route path="/backproduct"          element={
-            current_user.isLogged && current_user.usuario.administrador ? (
-              <ProductBackOffice />
-            ) : (
-              <Navigate to="/" replace={true} />
-            )
-          }
-        />
 
-          <Route path="/nuevoproducto"          element={
-            current_user.isLogged && current_user.usuario.administrador ? (
-              <NuevoProducto />
-            ) : (
-              <Navigate to="/" replace={true} />
-            )
-          }
-        />
+          <Route
+            path="/backproduct"
+            element={
+              current_user.isLogged && current_user.usuario.administrador ? (
+                <ProductBackOffice />
+              ) : (
+                <ErrorPage status={403} message={'Atención. Usted no posee acceso a esta pagina'}/>
+              )
+            }
+          />
 
-        
-        <Route path="/pedidos"          element={
-            current_user.isLogged && current_user.usuario.administrador ? (
-              <Pedidos />
-            ) : (
-              <Navigate to="/" replace={true} />
-            )
-          }
-        />
+            
+          <Route
+            path="/nuevoproducto"
+            element={
+              current_user.isLogged && current_user.usuario.administrador ? (
+                <NuevoProducto />
+              ) : (
+                <ErrorPage status={403} message={'Atención. Usted no posee acceso a esta pagina'}/>
+              )
+            }
+          />
+
+
+          
+          <Route
+            path="/pedidos"
+            element={
+              current_user.isLogged && current_user.usuario.administrador ? (
+                <Pedidos />
+              ) : (
+                <ErrorPage status={403} message={'Atención. Usted no posee acceso a esta pagina'}/>
+              )
+            }
+          />
+
+
 
           <Route path="/detail/:id" element={<DetailProduct />} />
+
+          <Route path="*" element={<ErrorPage status={404} message={'La pagina a la cual intentas acceder no existe'} />} />
         </Routes>
 
         <Footer />
