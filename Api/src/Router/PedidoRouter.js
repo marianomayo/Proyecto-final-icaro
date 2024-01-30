@@ -16,5 +16,8 @@ PedidoRouter.post("/generarPedido", [checkSession, validarErrores], PedidoContro
 
 PedidoRouter.post("/procesarPedido/:id", [checkSessionAdmin, idRequired, validarErrores], PedidoController.procesarPedido);
 
+PedidoRouter.get("/obtenerPedidosPorUsuario", [checkSession, validarErrores], PedidoController.getPedidosUsuario);
+
+PedidoRouter.get("/notificacionProcesada", [checkSession, validarErrores], PedidoController.procesarNotificacion);
 
 module.exports = PedidoRouter;

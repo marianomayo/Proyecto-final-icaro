@@ -54,7 +54,7 @@ export const disponibilidadStock = (ncantidad) => {
 
 
 export const errorModal = (error) => {
-  console.log(error);
+  
   Modal.error({
     title: '',
     content: error,

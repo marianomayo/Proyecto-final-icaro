@@ -23,4 +23,11 @@ const procesarPedido = (idPedido) => {
    
 };
 
-module.exports = { getAll, generarPedido, procesarPedido };
+const procesarPedidoNotificacion = (idsOrden) => {
+    return db.query(
+        `UPDATE pedido set bnotificado = 1 where id_orden_compra in (${idsOrden})`
+    );
+   
+};
+
+module.exports = { getAll, generarPedido, procesarPedido, procesarPedidoNotificacion };

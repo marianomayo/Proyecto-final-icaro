@@ -80,4 +80,49 @@ const getArticulosOrden = async (req, res) => {
     }
 }
 
-module.exports = { getAll, generarPedido, getPedidosSinProcesar, procesarPedido, getArticulosOrden };
+const getPedidosUsuario = async (req, res) => {
+    try {
+        
+        const current_user =  req.session.userId;    
+        
+        const pedidos = await ViewPedidoModel.getPedidosUsuario(current_user);
+      
+        const pedidosProcesadosSinNotificar = await ViewPedidoModel.getPedidosProcesadosSinNotificar(current_user);
+
+        for (const pedido of pedidos) {
+            pedido.articulos = await ViewOrdenCompraxArticulo.getProductInOrderByUserActive(pedido.id_orden_compra, current_user);
+        }
+       
+        res.status(200).json({ pedidos: pedidos, success: true, cantidadSinProcesar: pedidosProcesadosSinNotificar.length  });
+     
+        
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ msg: 'Error interno del servidor.', success: false });
+    }
+}
+
+const procesarNotificacion = async (req, res) => {
+    try {
+        
+        const current_user =  req.session.userId;  
+        
+        const pedidosProcesadosSinNotificar = await ViewPedidoModel.getPedidosProcesadosSinNotificar(current_user);
+
+        const idsOrden = pedidosProcesadosSinNotificar.map((pedido) => pedido.id_orden_compra);
+        
+        const pedidos = await PedidoModel.procesarPedidoNotificacion(idsOrden);
+      
+        
+
+        
+        res.status(200).json({ pedidos: pedidos, success: true, cantidadSinProcesar: pedidosProcesadosSinNotificar.length  });
+     
+        
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ msg: 'Error interno del servidor.', success: false });
+    }
+}
+
+module.exports = { getAll, generarPedido, getPedidosSinProcesar, procesarPedido, getArticulosOrden, getPedidosUsuario, procesarNotificacion };

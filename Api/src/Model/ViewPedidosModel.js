@@ -14,7 +14,18 @@ const getPedidos = () => {
   });
 }
 
+const getPedidosUsuario = (current_user) => {
+  return db.query( `SELECT * FROM view_pedido where id_usuario = ${current_user}`,{
+    type: QueryTypes.SELECT,
+  });
+}
+
+const getPedidosProcesadosSinNotificar = (current_user) => {
+  return db.query( `SELECT * FROM view_pedido where id_usuario = ${current_user} and bprocesado = 1 and bnotificado = 0 `,{
+    type: QueryTypes.SELECT,
+  });
+}
 
 
 
-module.exports = { getPedidosSinProcesar, getPedidos };
+module.exports = { getPedidosSinProcesar, getPedidos, getPedidosUsuario, getPedidosProcesadosSinNotificar };

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import '../Headers-Footer/css/header-footer.css';
 import {Link, useNavigate} from "react-router-dom";
 import { Button, Dropdown, Modal, Space } from 'antd';
-import { DownOutlined, ExclamationCircleOutlined, HeartFilled } from '@ant-design/icons';
+import { DownOutlined, ExclamationCircleOutlined, ExclamationOutlined, HeartFilled } from '@ant-design/icons';
 import { useUserStore } from '../../Store/useUserStore';
 import { useCartStore } from '../../Store/useCartStore';
 import usePedidosSinProcesarStore from '../../hooks/usePedidoSinProcesar';
 import { useFavStore } from '../../Store/useFavStore';
+import useCompraUser from '../../hooks/useCompraUsuario';
 
 function Header() {
 
@@ -17,7 +18,8 @@ function Header() {
   const cartState = useCartStore((state) => state);
   const pedidos = usePedidosSinProcesarStore();
   const favUser = useFavStore();
-
+  const pedidosSinProcesar = useCompraUser();
+  
   const handleOk = () => {    
     logout();
     cartState.resetCart();
@@ -36,7 +38,7 @@ function Header() {
       favUser.getFav();
 
     }else {
-      console.log(pedidos)
+     
       cartState.resetCart();
       favUser.resetFav();
     }
@@ -47,7 +49,7 @@ function Header() {
       document.querySelector(".btn_menu").removeEventListener("click", toggleMenu);
     };
 
-  }, [current_user, pedidos]); 
+  }, [current_user, pedidos, pedidosSinProcesar.cantidadSinProcesar]); 
 
 
   function toggleMenu() {
@@ -84,6 +86,17 @@ if(current_user.isLogged && !current_user.usuario.administrador){
       </Link>
     ),
     key: '0',
+  },
+  {
+    label: (
+      <Link to="/tuscompras">
+        Tus Compras 
+        {pedidosSinProcesar.cantidadSinProcesar > 0 && (
+          <ExclamationCircleOutlined style={{ color: 'red', marginLeft: '8px' }} />
+        )}
+      </Link>
+    ),
+    key: '1',
   });
   items.push({
     type: 'divider',

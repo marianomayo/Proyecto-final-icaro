@@ -14,6 +14,7 @@ import NuevoProducto from './Component/BackOffice/NuevoProducto';
 import Pedidos from './Component/Pedidos/Pedidos';
 import ErrorPage from './Component/ErrorPage/ErrorPage';
 import Favorito from './Component/Favorito/Favorito';
+import UserCompra from './Component/Compra/UserCompra';
 
 
 function App() {
@@ -75,6 +76,21 @@ function App() {
                   <ErrorPage status={403} message={'Atención. Usted no posee acceso a esta pagina'}/>
                 ) : (
                   <Favorito />
+                )
+              ) : (
+                <LogIn />
+              )
+            }
+          />
+
+          <Route
+            path="/tuscompras"
+            element={
+              current_user.isLogged ? (
+                current_user.usuario.administrador ? (
+                  <ErrorPage status={403} message={'Atención. Usted no posee acceso a esta pagina'}/>
+                ) : (
+                  <UserCompra />
                 )
               ) : (
                 <LogIn />
