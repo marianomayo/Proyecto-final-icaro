@@ -37,7 +37,7 @@ const DetailProduct = () => {
 
     const onFinish = async () => {
         try {
-            console.log("entro");
+            
        
           const response = await axios.post('/Api/product/addComentario', {
             id_producto: id,

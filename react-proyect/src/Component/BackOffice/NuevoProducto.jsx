@@ -52,8 +52,7 @@ const NuevoProducto = () => {
             } else {
                 throw new Error(`Unexpected response status: ${response.status}`);
             }
-        } catch (error) {
-            console.log(error.response.data.message);
+        } catch (error) {            
             errorModal(error.response.data.message ? error.response.data.message : 'Error desconocido');
         }
     };

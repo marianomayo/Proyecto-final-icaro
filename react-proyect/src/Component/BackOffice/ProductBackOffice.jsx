@@ -72,7 +72,7 @@ const ProductBackOffice = () => {
                 
                 errorModal(msg);
             }
-            console.log(error)
+            
         }
 
     

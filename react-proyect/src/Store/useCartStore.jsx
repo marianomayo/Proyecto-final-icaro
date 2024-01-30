@@ -10,7 +10,7 @@ export const useCartStore = create((set) => ({
     try {
      
       const response = await axios.post("/Api/order/addProductToCart",  vObj );
-      console.log(response.data)
+      
       set((state) => ({
         cart: response.data.productos, 
         cantidad: response.data.cantidad,

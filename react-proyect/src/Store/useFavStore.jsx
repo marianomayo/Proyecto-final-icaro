@@ -30,7 +30,7 @@ export const useFavStore = create((set) => ({
     try {
       
       const response = await axios.get("/Api/favorito/getFavByUser");
-      console.log(response)
+      
       set((state) => ({
         fav: response.data.producto, 
         cantidad: response.data.cantidad,      

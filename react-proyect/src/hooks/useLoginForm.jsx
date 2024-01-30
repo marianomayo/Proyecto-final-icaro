@@ -40,7 +40,7 @@ const useLoginForm = () => {
 
             if(response.status === 200){
 
-                console.log(response)
+                
             
                 const userObj = await response.data;       
         

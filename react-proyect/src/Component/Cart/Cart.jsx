@@ -25,7 +25,7 @@ const Cart = () => {
     title: '',
     response: ''
   });
-  console.log(cartProduct)
+  
   const navigate = useNavigate();
 
   const onChangeSwitch = (checked) => {
