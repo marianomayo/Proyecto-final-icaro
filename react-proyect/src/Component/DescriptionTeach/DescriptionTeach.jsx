@@ -24,7 +24,7 @@ const DescriptionTeach = ({title, itemsEnviados, column}) => {
         {
             key: '4',
             label: 'Banco',
-            children: 'Credicop',
+            children: 'Credicoop',
         },
        
     ];

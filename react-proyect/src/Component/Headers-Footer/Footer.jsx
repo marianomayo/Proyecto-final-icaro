@@ -49,7 +49,8 @@ function Footer() {
                 <li><Link to={'/'}>Home</Link></li>
                 {current_user.isLogged ? null : <li><a href="/login">Log In</a></li>}
                 {current_user.isLogged ? null : <li><a href="/signup">Registro</a></li>}
-                {current_user.isLogged && !current_user.usuario.administrador ? <li><a href="/carrito">Mi Carrito</a></li> : null}
+                {current_user.isLogged && !current_user.usuario.administrador ? <li><Link to={"/carrito"}>Mi Carrito</Link></li> : null}
+                {current_user.isLogged && !current_user.usuario.administrador ? <li><Link to={"/favorito"}>Favoritos</Link></li> : null}
                 {current_user.isLogged && current_user.usuario.administrador ? <li><Link to={"/backproduct"}>Productos</Link></li> : null}
                 {current_user.isLogged && current_user.usuario.administrador ? <li><Link to={"/nuevoproducto"}>Nuevo Producto</Link></li> : null}
                 </ul>

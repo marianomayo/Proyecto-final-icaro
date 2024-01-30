@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import '../Headers-Footer/css/header-footer.css';
 import {Link, useNavigate} from "react-router-dom";
 import { Button, Dropdown, Modal, Space } from 'antd';
-import { DownOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { DownOutlined, ExclamationCircleOutlined, HeartFilled } from '@ant-design/icons';
 import { useUserStore } from '../../Store/useUserStore';
 import { useCartStore } from '../../Store/useCartStore';
 import usePedidosSinProcesarStore from '../../hooks/usePedidoSinProcesar';
+import { useFavStore } from '../../Store/useFavStore';
 
 function Header() {
 
@@ -15,6 +16,7 @@ function Header() {
   const logout = useUserStore((state) => state.logout);
   const cartState = useCartStore((state) => state);
   const pedidos = usePedidosSinProcesarStore();
+  const favUser = useFavStore();
 
   const handleOk = () => {    
     logout();
@@ -31,11 +33,12 @@ function Header() {
     if(current_user.isLogged && !current_user.usuario.administrador){
 
       cartState.getProduct();
-    
+      favUser.getFav();
+
     }else {
       console.log(pedidos)
       cartState.resetCart();
-
+      favUser.resetFav();
     }
 
     document.querySelector(".btn_menu").addEventListener("click", toggleMenu);
@@ -72,6 +75,20 @@ if (current_user.isLogged && current_user.usuario.administrador) {
   
 }
 
+if(current_user.isLogged && !current_user.usuario.administrador){
+  items.push({
+    label: (
+      <Link to="/favorito">
+        Favoritos 
+        {favUser.cantidad > 0 && <span className="cart-quantity-favorito"><HeartFilled /> {favUser.cantidad}</span>}
+      </Link>
+    ),
+    key: '0',
+  });
+  items.push({
+    type: 'divider',
+  });
+}
 
 
 items.push({

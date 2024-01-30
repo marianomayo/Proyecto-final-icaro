@@ -181,18 +181,18 @@ const DetailProduct = () => {
                                 autoComplete="off"
                                 >
                                 <Form.Item
-                                    label="Rate"
+                                    label="Calificación"
                                     name="rate"
-                                    rules={[{ required: true, message: 'Please input the rate!' }]}
+                                    rules={[{ required: true, message: 'Debe Calificar el producto!' }]}
                                 >
                                     <Rate onChange={(value) => setNewComentario({ ...comentario, rate: value })} />
                                 </Form.Item>
 
                                 <Form.Item
-                                    label="Comment"
+                                    label="Comentario"
                                     name="comment"
                                     style={{ padding: '10px' }}
-                                    rules={[{ required: true, message: 'Please input your comment!' }]}
+                                    rules={[{ required: true, message: 'Por favor. Ingrese un comentario!' }]}
                                 >
                                     <Input.TextArea
                                     rows={10}
@@ -204,7 +204,7 @@ const DetailProduct = () => {
 
                                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                                     <Button type="primary" htmlType="submit" disabled={!submittable}>
-                                    Submit
+                                    Enviar
                                     </Button>
                                 </Form.Item>
                                 </Form>

@@ -13,6 +13,7 @@ import ProductBackOffice from './Component/BackOffice/ProductBackOffice';
 import NuevoProducto from './Component/BackOffice/NuevoProducto';
 import Pedidos from './Component/Pedidos/Pedidos';
 import ErrorPage from './Component/ErrorPage/ErrorPage';
+import Favorito from './Component/Favorito/Favorito';
 
 
 function App() {
@@ -59,6 +60,21 @@ function App() {
                   <ErrorPage status={403} message={'Atención. Usted no posee acceso a esta pagina'}/>
                 ) : (
                   <Cart />
+                )
+              ) : (
+                <LogIn />
+              )
+            }
+          />
+
+          <Route
+            path="/favorito"
+            element={
+              current_user.isLogged ? (
+                current_user.usuario.administrador ? (
+                  <ErrorPage status={403} message={'Atención. Usted no posee acceso a esta pagina'}/>
+                ) : (
+                  <Favorito />
                 )
               ) : (
                 <LogIn />

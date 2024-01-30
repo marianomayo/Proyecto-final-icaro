@@ -25,7 +25,7 @@ const Cart = () => {
     title: '',
     response: ''
   });
-
+  console.log(cartProduct)
   const navigate = useNavigate();
 
   const onChangeSwitch = (checked) => {
@@ -123,7 +123,7 @@ const Cart = () => {
     },
     {
       title: 'Precio',
-      dataIndex: 'fprecio',
+      dataIndex: 'fpreciooferta',
       align: 'center',
       render: (text) => <span>$ {text}</span>,
     },
